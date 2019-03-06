@@ -71,4 +71,4 @@ def clear_frame(ax=None):
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)
     for spine in ax.spines.itervalues():
-        spine.set_visible(False) 
+        spine.set_visible(False)
