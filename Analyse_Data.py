@@ -9,7 +9,7 @@ from pymatgen.io.vasp.outputs import Vasprun
 
 if __name__ == "__main__":
     # Only Bands
-    vasprun = Vasprun("./Bandes/vasprun.xml",
+    vasprun = Vasprun("C:\Users\a\OneDrive\Calculation_Data\Mg2C_Graphene\Color_Bands\Bands",
                       parse_projected_eigen=True)
     bands = vasprun.get_band_structure("./Bandes/KPOINTS",
                                        line_mode=True,
