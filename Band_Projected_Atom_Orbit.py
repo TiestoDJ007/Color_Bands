@@ -2,14 +2,13 @@
 # -*- coding=utf-8 -*-
 
 import sys
-import numpy as np
 
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.collections import LineCollection
 from matplotlib.gridspec import GridSpec
-
+from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
-from pymatgen.electronic_structure.core import Spin, OrbitalType
 
 
 def rgbline(ax, k, e, red, green, blue, alpha=1.):
