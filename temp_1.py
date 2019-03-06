@@ -97,3 +97,16 @@ if __name__ == "__main__":
                     contrib[orbit_atom.index(atom_name), b, :, 1],
                     contrib[orbit_atom.index(atom_name), b, :, 2])
             rgbline_atom[atom_name] = ax1
+
+            contrib = np.zeros((len(orbit_atom), bands.nb_bands, len(bands.kpoints), 3))
+            for b in range(bands.nb_bands):
+                for k in range(len(bands.kpoints)):
+                    for atom_name in orbit_atom:
+                        sc = pbands[Spin.up][b][k][atom_name]["s"] ** 2
+                        pc = pbands[Spin.up][b][k][atom_name]["p"] ** 2
+                        dc = pbands[Spin.up][b][k][atom_name]["d"] ** 2
+                        tot = sc + pc + dc
+                        if tot != 0.0:
+                            contrib[orbit_atom.index(atom_name), b, k, 0] = sc / tot
+                            contrib[orbit_atom.index(atom_name), b, k, 1] = pc / tot
+                            contrib[orbit_atom.index(atom_name), b, k, 2] = dc / tot
