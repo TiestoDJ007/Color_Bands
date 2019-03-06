@@ -26,6 +26,6 @@ def load_variable(filename):
     pickle.load(f)
 
 if __name__ == "__main__":
-    # 读取数据
+    # 读取数据,需手动输入数据名称
     pbands_atom = load_variable('pbands_atom.txt')
     labels = [r"$L$", r"$\Gamma$", r"$X$", r"$U,K$", r"$\Gamma$"]
