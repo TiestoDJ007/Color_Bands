@@ -70,7 +70,33 @@ if __name__ == "__main__":
     # Band Diagram
     # ------------
     name = {}
-    tmp_atom = {}.fromkeys(run.atomic_symbols).keys()
+    tmp_atom = sorted(set(run.atomic_symbols), key=run.atomic_symbols.index)
     for i in tmp_atom:
         name[i] = ["s", "p", "d"]
     pbands = bands.get_projections_on_elements_and_orbitals(name)
+
+    # compute s, p, d normalized contributions
+    contrib = np.zeros((len(tmp_atom), bands.nb_bands, len(bands.kpoints), 3))
+    for b in range(bands.nb_bands):
+        for k in range(len(bands.kpoints)):
+            for atom_name in tmp_atom:
+                sc = pbands[Spin.up][b][k][atom_name]["s"] ** 2
+                pc = pbands[Spin.up][b][k][atom_name]["p"] ** 2
+                dc = pbands[Spin.up][b][k][atom_name]["d"] ** 2
+                tot = sc + pc + dc
+                if tot != 0.0:
+                    contrib[tmp_atom.index(atom_name), b, k, 0] = sc / tot
+                    contrib[tmp_atom.index(atom_name), b, k, 1] = pc / tot
+                    contrib[tmp_atom.index(atom_name), b, k, 2] = dc / tot
+
+    # plot bands using rgb mapping
+    rgbline_atom = {}
+    for b in range(bands.nb_bands):
+        for atom_name in tmp_atom:
+            rgbline(ax1,
+                    range(len(bands.kpoints)),
+                    [e - bands.efermi for e in bands.bands[Spin.up][b]],
+                    contrib[tmp_atom.index(atom_name), b, :, 0],
+                    contrib[tmp_atom.index(atom_name), b, :, 1],
+                    contrib[tmp_atom.index(atom_name), b, :, 2])
+            rgbline_atom[atom_name] = ax1

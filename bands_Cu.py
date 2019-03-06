@@ -58,14 +58,12 @@ if __name__ == "__main__":
     fig = plt.figure(figsize=(11.69, 8.27))
     fig.suptitle("Bands diagram of copper")
     ax1 = plt.subplot(gs[0])
-    ax2 = plt.subplot(gs[1])  # , sharey=ax1)
 
     # set ylim for the plot
     # ---------------------
     emin = -10.
     emax = 10.
     ax1.set_ylim(emin, emax)
-    ax2.set_ylim(emin, emax)
 
     # Band Diagram
     # ------------
@@ -90,69 +88,40 @@ if __name__ == "__main__":
                     contrib[tmp_atom.index(atom_name), b, k, 2] = dc / tot
 
     # plot bands using rgb mapping
+    rgbline_atom = {}
     for b in range(bands.nb_bands):
-        rgbline(ax1,
-                range(len(bands.kpoints)),
-                [e - bands.efermi for e in bands.bands[Spin.up][b]],
-                contrib[b, :, 0],
-                contrib[b, :, 1],
-                contrib[b, :, 2])
+        for atom_name in tmp_atom:
+            rgbline(ax1,
+                    range(len(bands.kpoints)),
+                    [e - bands.efermi for e in bands.bands[Spin.up][b]],
+                    contrib[tmp_atom.index(atom_name), b, :, 0],
+                    contrib[tmp_atom.index(atom_name), b, :, 1],
+                    contrib[tmp_atom.index(atom_name), b, :, 2])
+            rgbline_atom[atom_name] = ax1
 
     # style
-    ax1.set_xlabel("k-points")
-    ax1.set_ylabel(r"$E - E_f$   /   eV")
-    ax1.grid()
+    for atom_name in ['C']:
 
-    # fermi level at 0
-    ax1.hlines(y=0, xmin=0, xmax=len(bands.kpoints), color="k", lw=2)
+        rgbline_atom[atom_name].set_xlabel("k-points")
+        rgbline_atom[atom_name].set_ylabel(r"$E - E_f$   /   eV")
+        rgbline_atom[atom_name].grid()
 
-    # labels
-    nlabs = len(labels)
-    step = len(bands.kpoints) / (nlabs - 1)
-    for i, lab in enumerate(labels):
-        ax1.vlines(i * step, emin, emax, "k")
-    ax1.set_xticks([i * step for i in range(nlabs)])
-    ax1.set_xticklabels(labels)
+        # fermi level at 0
+        rgbline_atom[atom_name].hlines(y=0, xmin=0, xmax=len(bands.kpoints), color="k", lw=2)
 
-    ax1.set_xlim(0, len(bands.kpoints))
+        # labels
+        nlabs = len(labels)
+        step = len(bands.kpoints) / (nlabs - 1)
+        for i, lab in enumerate(labels):
+            rgbline_atom[atom_name].vlines(i * step, emin, emax, "k")
+        rgbline_atom[atom_name].set_xticks([i * step for i in range(nlabs)])
+        rgbline_atom[atom_name].set_xticklabels(labels)
 
-    # Density of states
-    # ----------------
+        rgbline_atom[atom_name].set_xlim(0, len(bands.kpoints))
 
-    ax2.set_yticklabels([])
-    ax2.grid()
-    ax2.set_xlim(1e-4, 5)
-    ax2.set_xticklabels([])
-    ax2.hlines(y=0, xmin=0, xmax=5, color="k", lw=2)
-    ax2.set_xlabel("Density of States", labelpad=28)
+        # plot format style
+        # -----------------
+        plt.subplots_adjust(wspace=0)
 
-    # spd contribution
-    ax2.plot(spd_dos[OrbitalType.s].densities[Spin.up],
-             dosrun.tdos.energies - dosrun.efermi,
-             "r-", label="3s", lw=2)
-    ax2.plot(spd_dos[OrbitalType.p].densities[Spin.up],
-             dosrun.tdos.energies - dosrun.efermi,
-             "g-", label="3p", lw=2)
-    ax2.plot(spd_dos[OrbitalType.d].densities[Spin.up],
-             dosrun.tdos.energies - dosrun.efermi,
-             "b-", label="3d", lw=2)
-
-    # total dos
-    ax2.fill_between(dosrun.tdos.densities[Spin.up],
-                     0,
-                     dosrun.tdos.energies - dosrun.efermi,
-                     color=(0.7, 0.7, 0.7),
-                     facecolor=(0.7, 0.7, 0.7))
-
-    ax2.plot(dosrun.tdos.densities[Spin.up],
-             dosrun.tdos.energies - dosrun.efermi,
-             color=(0.6, 0.6, 0.6),
-             label="total DOS")
-
-    # plot format style
-    # -----------------
-    ax2.legend(fancybox=True, shadow=True, prop={'size': 18})
-    plt.subplots_adjust(wspace=0)
-
-    # plt.show()
-    plt.savefig(sys.argv[0].strip(".py") + ".pdf", format="pdf")
+        # plt.show()
+        plt.savefig(sys.argv[0].strip(".py") + ".pdf", format="pdf")
