@@ -33,7 +33,7 @@ if __name__ == "__main__":
                     contrib[orbit_atom.index(atom_name), b, k, 2] = dc / tot
 
 
-    # 生成不同原子的pdos
+    # 生成不同原子的Projected_Bands
     def pbands_atom(i):
         pbands_tmp = copy.deepcopy(pbands)
         for b in range(bands.nb_bands):
