@@ -43,6 +43,7 @@ if __name__ == "__main__":
                         del pbands_tmp[Spin.up][b][k][n]
         return pbands_tmp
 
-    #动态生成相应原子的名称
+
+    # 动态生成相应原子的名称
     for i in orbit_atom:
         locals()['pbands_' + i] = pbands_atom(i)
