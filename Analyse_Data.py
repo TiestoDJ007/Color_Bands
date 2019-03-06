@@ -31,8 +31,18 @@ if __name__ == "__main__":
                     contrib[orbit_atom.index(atom_name), b, k, 0] = sc / tot
                     contrib[orbit_atom.index(atom_name), b, k, 1] = pc / tot
                     contrib[orbit_atom.index(atom_name), b, k, 2] = dc / tot
+
+
     # 生成不同原子的pdos
-    locals()
-    for b in range(bands.nb_bands):
-        for k in range(len(bands.kpoints)):
-            del pbands_Mg[Spin.up][b][k]['C']
+    def pbands_atom(i):
+        pbands_tmp = copy.deepcopy(pbands)
+        for b in range(bands.nb_bands):
+            for k in range(len(bands.kpoints)):
+                for n in pbands[Spin.up][b][k].keys():
+                    if n != i:
+                        del pbands_tmp[Spin.up][b][k][n]
+        return pbands_tmp
+
+
+    for i in orbit_atom:
+        locals()['pbands_' + i] = pbands_atom(i)
