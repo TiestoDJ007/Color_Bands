@@ -2,6 +2,7 @@
 # -*- coding=utf-8 -*-
 
 import sys
+import copy
 import numpy as np
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
@@ -30,7 +31,8 @@ if __name__ == "__main__":
                     contrib[orbit_atom.index(atom_name), b, k, 0] = sc / tot
                     contrib[orbit_atom.index(atom_name), b, k, 1] = pc / tot
                     contrib[orbit_atom.index(atom_name), b, k, 2] = dc / tot
-    #生成不同原子的pdos
+    # 生成不同原子的pdos
+    locals()
     for b in range(bands.nb_bands):
         for k in range(len(bands.kpoints)):
             del pbands_Mg[Spin.up][b][k]['C']
