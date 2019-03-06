@@ -9,9 +9,9 @@ from pymatgen.io.vasp.outputs import Vasprun
 
 if __name__ == "__main__":
     # Only Bands
-    vasprun = Vasprun("C:\Users\a\OneDrive\Calculation_Data\Mg2C_Graphene\Color_Bands\Bands",
+    vasprun = Vasprun("C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/vasprun.xml",
                       parse_projected_eigen=True)
-    bands = vasprun.get_band_structure("./Bandes/KPOINTS",
+    bands = vasprun.get_band_structure("C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/KPOINTS",
                                        line_mode=True,
                                        efermi=vasprun.efermi)
     name = {}
