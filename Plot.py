@@ -3,6 +3,7 @@
 
 import pickle
 
+import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.collections import LineCollection
 
@@ -27,6 +28,15 @@ if __name__ == "__main__":
     pbands = pickle.load(open('PBands_Mg.txt', 'rb'))
     # 开始画图
     labels = [r"$L$", r"$\Gamma$", r"$X$", r"$U,K$", r"$\Gamma$"]
+    font = {'family': 'serif', 'size': 24}
+    plt.rc('font', **font)
+    fig = plt.figure(figsize=(11.69, 8.27))
+    fig.title("Bands diagram of silicon")
+    ax = plt.subplot(gs[0])
+    #设置Y轴最大值最小值
+    emin = -1.
+    emax = 1.
+    ax.set_ylim(emin, emax)
     # 颜色变化程度
     atom_name = 'Mg'  # 手动输入画图的原子
     contrib = np.zeros((bands.nb_bands, len(bands.kpoints), 3))
@@ -40,3 +50,7 @@ if __name__ == "__main__":
                 contrib[atom_name, b, k, 0] = sc / tot
                 contrib[atom_name, b, k, 1] = pc / tot
                 contrib[atom_name, b, k, 2] = dc / tot
+
+    ax.set_xlabel("k-points")
+    ax.set_ylabel(r"$E - E_f$   /   eV")
+    ax.grid()
