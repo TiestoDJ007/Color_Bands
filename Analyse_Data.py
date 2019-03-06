@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import sys
 import copy
+
 import numpy as np
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
@@ -43,6 +43,6 @@ if __name__ == "__main__":
                         del pbands_tmp[Spin.up][b][k][n]
         return pbands_tmp
 
-
+    #动态生成相应原子的名称
     for i in orbit_atom:
         locals()['pbands_' + i] = pbands_atom(i)
