@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import copy
 import pickle
+from collections import defaultdict
 
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
@@ -10,13 +10,11 @@ from pymatgen.io.vasp.outputs import Vasprun
 
 # 生成不同原子的Projected_Bands
 def Pbands_Separate(i):
-    pbands_tmp = copy.deepcopy(pbands)
+    Pbands_tmp = defaultdict(dict)
     for b in range(bands.nb_bands):
         for k in range(len(bands.kpoints)):
-            for n in pbands[Spin.up][b][k].keys():
-                if n != i:
-                    del pbands_tmp[Spin.up][b][k][n]
-    return pbands_tmp
+            Pbands_tmp[b][k] = pbands[Spin.up][b][k][i]
+    return Pbands_tmp
 
 
 # 变量保存
@@ -41,9 +39,8 @@ if __name__ == "__main__":
     pbands = bands.get_projections_on_elements_and_orbitals(name)
 
     # 动态生成相应原子的名称，以及画图所需数据
-    pbands_atom = {}
-    for i in orbit_atom:
-        pbands_atom[i] = Pbands_Separate(i)
+    PBands_Mg = Pbands_Separate('Mg')
+    save_variable(PBands_Mg, 'PBands_Mg.txt')
+    save_variable(bands,'bands.txt')
 
-    #最后需要手动输出文件，详情请见变量保存
-
+    # 最后需要手动输出文件，详情请见变量保存
