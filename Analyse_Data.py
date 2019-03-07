@@ -63,4 +63,3 @@ if __name__ == "__main__":
     contrib_C[:, :, 2] = (pbands_d_C ** 2) / total
 
     # 绘图
-
