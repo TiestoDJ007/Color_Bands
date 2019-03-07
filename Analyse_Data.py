@@ -58,9 +58,9 @@ if __name__ == "__main__":
     contrib_Mg[:, :, 1] = (pbands_p_Mg ** 2) / total
     contrib_Mg[:, :, 2] = (pbands_d_Mg ** 2) / total
     contrib_C = deepcopy(contrib_Origin)
-    contrib_Mg[:, :, 0] = (pbands_s_Mg ** 2) / total
-    contrib_Mg[:, :, 1] = (pbands_p_Mg ** 2) / total
-    contrib_Mg[:, :, 2] = (pbands_d_Mg ** 2) / total
+    contrib_C[:, :, 0] = (pbands_s_C ** 2) / total
+    contrib_C[:, :, 1] = (pbands_p_C ** 2) / total
+    contrib_C[:, :, 2] = (pbands_d_C ** 2) / total
 
     # 绘图
 
