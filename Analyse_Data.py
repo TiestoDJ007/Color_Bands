@@ -2,9 +2,10 @@
 # -*- coding=utf-8 -*-
 
 import pickle
-from copy import deepcopy
-
 import numpy as np
+from collections import defaultdict
+from copy import deepcopy
+from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
 
