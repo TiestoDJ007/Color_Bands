@@ -87,4 +87,5 @@ if __name__ == "__main__":
     ax1.set_xticks([i * step for i in range(nlabs)])
     ax1.set_xticklabels(labels)
     ax1.set_xlim(0, len(bands.kpoints))
+    plt.show()
     plt.savefig(sys.argv[0].strip(".py") + ".png", format="png")
