@@ -3,7 +3,7 @@ from copy import deepcopy
 
 import matplotlib.pyplot as plt
 import numpy as np
-from pymatgen.electronic_structure.core import Spin
+from pymatgen.electronic_structure.core import Spin  # 引入Spin函数，使之能被索引
 from pymatgen.io.vasp.outputs import Vasprun
 
 if __name__ == "__main__":
