@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import sys
 import pickle
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
-from collections import defaultdict
+import sys
 from copy import deepcopy
+
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.collections import LineCollection
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
@@ -87,5 +88,10 @@ if __name__ == "__main__":
     ax1.set_xticks([i * step for i in range(nlabs)])
     ax1.set_xticklabels(labels)
     ax1.set_xlim(0, len(bands.kpoints))
-    plt.show()
+    ax1.set_title('C Projected Bands')
+    red_patch = mpatches.Patch(color='red', label='Orbital s', linewidth=0.1)
+    green_patch = mpatches.Patch(color='green', label='Orbital p', linewidth=0.1)
+    blue_patch = mpatches.Patch(color='blue', label='Orbital d', linewidth=0.1)
+    plt.legend(handles=[red_patch, green_patch, blue_patch])
     plt.savefig(sys.argv[0].strip(".py") + ".png", format="png")
+    plt.show()

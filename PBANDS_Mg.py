@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import sys
 import pickle
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
-from collections import defaultdict
+import sys
 from copy import deepcopy
+
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.collections import LineCollection
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
@@ -23,7 +24,7 @@ def save_variable(Vars, filename):
 def rgbline(ax, k, e, red, green, blue, alpha=1.):
     # creation of segments based on
     # http://nbviewer.ipython.org/urls/raw.github.com/dpsanders/matplotlib-examples/master/colorline.ipynb
-    pts = np.array([k, e]).T.reshape(-1, 1, 2) #生成一个没有用的维度，以便下一步的计算
+    pts = np.array([k, e]).T.reshape(-1, 1, 2)  # 生成一个没有用的维度，以便下一步的计算
     seg = np.concatenate([pts[:-1], pts[1:]], axis=1)
 
     nseg = len(k) - 1
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
     font = {'family': 'sans-serif', 'size': 24}
     fig, ax1 = plt.subplots()
-    ax1.set_ylim(-1,1)
+    ax1.set_ylim(-1, 1)
     for b in range(bands.nb_bands):
         rgbline(ax1,
                 range(len(bands.kpoints)),
@@ -87,5 +88,10 @@ if __name__ == "__main__":
     ax1.set_xticks([i * step for i in range(nlabs)])
     ax1.set_xticklabels(labels)
     ax1.set_xlim(0, len(bands.kpoints))
-    plt.show()
+    ax1.set_title('Mg Projected Bands')
+    red_patch = mpatches.Patch(color='red', label='Orbital s', linewidth=0.1)
+    green_patch = mpatches.Patch(color='green', label='Orbital p', linewidth=0.1)
+    blue_patch = mpatches.Patch(color='blue', label='Orbital d', linewidth=0.1)
+    plt.legend(handles=[red_patch, green_patch, blue_patch])
     plt.savefig(sys.argv[0].strip(".py") + ".png", format="png")
+    plt.show()

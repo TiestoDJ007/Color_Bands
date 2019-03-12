@@ -4,6 +4,7 @@
 import sys
 from copy import deepcopy
 
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.collections import LineCollection
@@ -77,5 +78,10 @@ if __name__ == "__main__":
     ax1.set_xticks([i * step for i in range(nlabs)])
     ax1.set_xticklabels(labels)
     ax1.set_xlim(0, len(bands.kpoints))
-    plt.show()
+    ax1.set_title('C Orbital p Projected Bands')
+    red_patch = mpatches.Patch(color='red', label='Orbital px',)
+    green_patch = mpatches.Patch(color='green', label='Orbital py')
+    blue_patch = mpatches.Patch(color='blue', label='Orbital pz')
+    plt.legend(handles=[red_patch, green_patch, blue_patch])
     plt.savefig(sys.argv[0].strip(".py") + ".png", format="png")
+    plt.show()
