@@ -22,7 +22,7 @@ if __name__ == "__main__":
         c_0 = np.arange(Point_x_0[i_0], M_x + 0.01, step)
         for j_0 in range(c_0.size):
             y_0 = "%.4f" % c_0[j_0]
-            if y != '0.3400':
+            if y_0 != '0.3400':
                 k_mesh_part_0_list.append([float(x_0), float(y_0)])
     k_mesh_part_0 = np.array(k_mesh_part_0_list)
 
