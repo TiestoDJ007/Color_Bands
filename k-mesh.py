@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
 
-
 def y(x):
     y = -2 * x + 1
     return y
