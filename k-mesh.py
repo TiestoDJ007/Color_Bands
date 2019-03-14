@@ -14,7 +14,7 @@ if __name__ == "__main__":
     M_y = 0.333
     K_x = 0.5
     K_y = 0.0
-    step = 0.005
+    step = 0.002
 
     Point_x_0 = np.arange(G_x, M_x + step, step)
     k_mesh_part_0_list = []
@@ -52,8 +52,8 @@ if __name__ == "__main__":
     out_file.write("%d\n" % (k_mesh.shape[0]))
     out_file.write("Reciprocal\n")
     for i in range(np.shape(k_mesh)[0]):
-        out_file.write("{0:6f} {1:6f} {2:6f} {3:0f}\n".format(float(k_mesh[i, 0]),
-                                                              float(k_mesh[i, 1]),
-                                                              float(k_mesh[i, 2]),
-                                                              float(k_mesh[i, 3])))
+        out_file.write("{0:6f}  {1:6f}  {2:6f}  {3:0f}\n".format(float(k_mesh[i, 0]),
+                                                                 float(k_mesh[i, 1]),
+                                                                 float(k_mesh[i, 2]),
+                                                                 float(k_mesh[i, 3])))
     out_file.close()
