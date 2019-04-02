@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import sys
+import os
 from copy import deepcopy
 
 import matplotlib.patches as mpatches
@@ -15,7 +15,7 @@ from pymatgen.io.vasp.outputs import Vasprun
 def rgbline(ax, k, e, red, green, blue, alpha=1.):
     # creation of segments based on
     # http://nbviewer.ipython.org/urls/raw.github.com/dpsanders/matplotlib-examples/master/colorline.ipynb
-    pts = np.array([k, e]).T.reshape(-1, 1, 2) #生成一个没有用的维度，以便下一步的计算
+    pts = np.array([k, e]).T.reshape(-1, 1, 2)  # 生成一个没有用的维度，以便下一步的计算
     seg = np.concatenate([pts[:-1], pts[1:]], axis=1)
 
     nseg = len(k) - 1
@@ -29,9 +29,14 @@ def rgbline(ax, k, e, red, green, blue, alpha=1.):
 
 if __name__ == "__main__":
     # Only Bands
-    vasprun = Vasprun("C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/vasprun.xml",
+    data_file = "vasprun_-4%.xml"
+    KPOINTS_file = "KPOINTS"
+    root_dirctory = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/"
+    output_filename = "{}".format(os.path.basename(__file__).strip('.py') +'_'+ data_file.strip('vasprun_' + '.xml'))
+    output_dirctory = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/"
+    vasprun = Vasprun("{}".format(root_dirctory + data_file),
                       parse_projected_eigen=True)
-    bands = vasprun.get_band_structure("C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/KPOINTS",
+    bands = vasprun.get_band_structure("{}".format(root_dirctory + KPOINTS_file),
                                        line_mode=True,
                                        efermi=vasprun.efermi)
     # 将bands.projections转化成n维数组
@@ -59,7 +64,7 @@ if __name__ == "__main__":
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
     font = {'family': 'sans-serif', 'size': 24}
     fig, ax1 = plt.subplots()
-    ax1.set_ylim(-1,1)
+    ax1.set_ylim(-1, 1)
     for b in range(bands.nb_bands):
         rgbline(ax1,
                 range(len(bands.kpoints)),
@@ -79,9 +84,9 @@ if __name__ == "__main__":
     ax1.set_xticklabels(labels)
     ax1.set_xlim(0, len(bands.kpoints))
     ax1.set_title('C Orbital p Projected Bands')
-    red_patch = mpatches.Patch(color='red', label='Orbital px',)
+    red_patch = mpatches.Patch(color='red', label='Orbital px', )
     green_patch = mpatches.Patch(color='green', label='Orbital py')
     blue_patch = mpatches.Patch(color='blue', label='Orbital pz')
     plt.legend(handles=[red_patch, green_patch, blue_patch])
-    plt.savefig(sys.argv[0].strip(".py") + ".png", format="png")
+    plt.savefig(output_dirctory+output_filename+".png", format="png")
     plt.show()

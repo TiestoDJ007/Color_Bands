@@ -2,7 +2,6 @@
 # -*- coding=utf-8 -*-
 
 import pickle
-import sys
 from copy import deepcopy
 
 import matplotlib.patches as mpatches
@@ -93,5 +92,5 @@ if __name__ == "__main__":
     green_patch = mpatches.Patch(color='green', label='Orbital p', linewidth=0.1)
     blue_patch = mpatches.Patch(color='blue', label='Orbital d', linewidth=0.1)
     plt.legend(handles=[red_patch, green_patch, blue_patch])
-    plt.savefig(sys.argv[0].strip(".py") + ".png", format="png")
+    plt.savefig('C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/1.png')
     plt.show()

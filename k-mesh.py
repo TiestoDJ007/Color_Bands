@@ -14,7 +14,7 @@ if __name__ == "__main__":
     M_y = 0.333
     K_x = 0.5
     K_y = 0.0
-    step = 0.002
+    step = 0.003
 
     Point_x_0 = np.arange(G_x, M_x + step, step)
     k_mesh_part_0_list = []
