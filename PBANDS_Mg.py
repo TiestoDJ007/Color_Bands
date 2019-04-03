@@ -37,9 +37,9 @@ def rgbline(ax, k, e, red, green, blue, alpha=1.):
 
 if __name__ == "__main__":
     # Only Bands
-    vasprun = Vasprun("C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/vasprun.xml",
+    vasprun = Vasprun("C:/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/vasprun.xml",
                       parse_projected_eigen=True)
-    bands = vasprun.get_band_structure("C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/KPOINTS",
+    bands = vasprun.get_band_structure("C:/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Color_Bands/Bands/KPOINTS",
                                        line_mode=True,
                                        efermi=vasprun.efermi)
     # 将bands.projections转化成n维数组
@@ -92,5 +92,5 @@ if __name__ == "__main__":
     green_patch = mpatches.Patch(color='green', label='Orbital p', linewidth=0.1)
     blue_patch = mpatches.Patch(color='blue', label='Orbital d', linewidth=0.1)
     plt.legend(handles=[red_patch, green_patch, blue_patch])
-    plt.savefig('C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/1.png')
+    plt.savefig('C:/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/1.png')
     plt.show()

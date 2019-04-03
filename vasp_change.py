@@ -1,0 +1,43 @@
+#!/usr/bin/python
+# -*- coding=utf-8 -*-
+
+import os
+
+dir_list = os.listdir()
+for i in range(len(dir_list)):
+    os.system('{}'.format('cd ' + dir_list[i]))
+    os.system('{}'.format('cd ' + 'SO'))
+    os.system('{}'.format('mpirun ' + '-np ' + '16 ' + 'vasp_std ' + '> ' + 'log'))
+    os.system('{}'.format('cd ' + '..'))
+    os.system('{}'.format('mkdir ' + 'SCF'))
+    os.system('{}'.format('cp ' + 'SO/CONTCAR ' + 'SCF/POSCAR'))
+    os.system('{}'.format('cp ' + 'SO/{INCAR,KPOINTS,POTCAR} ' + 'SCF/{INCAR,KPOINTS,POTCAR}'))
+    os.system('{}'.format('sed -i ' + '''s/IBRION[[:space:]]=[[:space:]]2/IBRION = -1/g ''' + 'SCF/INCAR'))
+    os.system('{}'.format('sed -i ' + '''s/NSW[[:space:]]=[[:space:]]200/NSW = 1/g ''' + 'SCF/INCAR'))
+    os.system('{}'.format('cd ' + 'SCF'))
+    os.system('{}'.format('mpirun ' + '-np ' + '16 ' + 'vasp_std ' + '> ' + 'log'))
+    os.system('{}'.format('cd ' + '..'))
+    os.system('{}'.format('mkdir ' + 'Band'))
+    os.system('{}'.format('cp ' + 'KPOINTS_band ' + 'Band/KPOINTS'))
+    os.system('{}'.format('cp ' + 'SCF/{INCAR,POSCAR,POTCAR,CHGCAR} ' + 'Band/'))
+    os.system('{}'.format('sed -i ' + '''s/ICHARG[[:space:]]=[[:space:]]2/ICHARG = 11/g ''' + 'SCF/INCAR'))
+    os.system('{}'.format('mpirun ' + '-np ' + '16 ' + 'vasp_std ' + '> ' + 'log'))
+    os.system('{}'.format('cd ' + '..'))
+    os.system('{}'.format('mkdir ' + 'DOS'))
+    os.system('{}'.format('mkdir ' + 'DOS/STEP_1'))
+    os.system('{}'.format('mkdir ' + 'DOS/STEP_2'))
+    os.system('{}'.format('cd '+'DOS'))
+    os.system('{}'.format('cp '+'../SCF/{INCAR,POSCAR,POTCAR} '+'STEP_1/'))
+    os.system('{}'.format('sed -i ' + '''s/ISMEAR[[:space:]]=[[:space:]]0/ISMEAR = -5/g ''' + 'STEP_1/INCAR'))
+    os.system('{}'.format(r'sed -i s/SIGMA[[:space:]]=[[:space:]]0.05/EMIN\ \=\ \-2\\n\ \EMAX\ \=\ \2/g STEP_1/INCAR'))
+    os.system('{}'.format('cp ../KPOINTS_DOS STEP_1/KPOINTS'))
+    os.system('{}'.format('cd ' + 'DOS/STEP_1'))
+    os.system('{}'.format('mpirun ' + '-np ' + '16 ' + 'vasp_std ' + '> ' + 'log'))
+    os.system('{}'.format('cd ' + '..'))
+    os.system('{}'.format('cp STEP_1/{CHGCAR,INCAR,KPOINTS,POSCAR,POTCAR} STEP_2'))
+    os.system('{}'.format(r'sed -i /EMAX/aNEDOS\ \=\ \2001 STEP_2/INCAR'))
+    os.system('{}'.format(r'sed -i ' + '''s/ICHARG[[:space:]]=[[:space:]]2/ICHARG = 11/g ''' + 'STEP_2/INCAR'))
+    os.system('{}'.format('cd STEP_2'))
+    os.system('{}'.format('mpirun ' + '-np ' + '16 ' + 'vasp_std ' + '> ' + 'log'))
+
+print('ALL DONE')

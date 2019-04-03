@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import numpy as np
 from math import sqrt
+
+import numpy as np
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
-vasprun = Vasprun('C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Fermi_Surface/vasprun.xml')
-bands = vasprun.get_band_structure('C:/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Fermi_Surface/KPOINTS',
+vasprun = Vasprun('C:/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Fermi_Surface/vasprun.xml')
+bands = vasprun.get_band_structure('C:/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Fermi_Surface/KPOINTS',
                                    efermi=vasprun.efermi,
                                    line_mode=True)
 position = np.zeros(shape=(len(bands.kpoints), 2))

@@ -31,9 +31,9 @@ if __name__ == "__main__":
     # Only Bands
     data_file = "vasprun_-4%.xml"
     KPOINTS_file = "KPOINTS"
-    root_dirctory = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/"
+    root_dirctory = "/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Band/"
     output_filename = "{}".format(os.path.basename(__file__).strip('.py') +'_'+ data_file.strip('vasprun_' + '.xml'))
-    output_dirctory = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/"
+    output_dirctory = "/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/"
     vasprun = Vasprun("{}".format(root_dirctory + data_file),
                       parse_projected_eigen=True)
     bands = vasprun.get_band_structure("{}".format(root_dirctory + KPOINTS_file),

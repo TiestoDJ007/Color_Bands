@@ -3,14 +3,14 @@
 
 # Topics: line, color, LineCollection, cmap, colorline, codex
 '''
-Defines a function colorline that draws a (multi-)colored 2D line with coordinates x and y.
-The color is taken from optional data in z, and creates a LineCollection.
+Defines A function colorline that draws A (multi-)colored 2D line with coordinates x and y.
+The color is taken from optional data in z, and creates A LineCollection.
 
 z can be:
-- empty, in which case a default coloring will be used based on the position along the input arrays
-- a single number, for a uniform color [this can also be accomplished with the usual plt.plot]
+- empty, in which case A default coloring will be used based on the position along the input arrays
+- A single number, for A uniform color [this can also be accomplished with the usual plt.plot]
 - an array of the length of at least the same length as x, to color according to this data
-- an array of a smaller length, in which case the colors are repeated along the curve
+- an array of A smaller length, in which case the colors are repeated along the curve
 
 The function colorline returns the LineCollection created, which can be modified afterwards.
 
@@ -40,17 +40,17 @@ def make_segments(x, y):
 
 def colorline(x, y, z=None, cmap=plt.get_cmap('copper'), norm=plt.Normalize(0.0, 1.0), linewidth=3, alpha=1.0):
     '''
-    Plot a colored line with coordinates x and y
+    Plot A colored line with coordinates x and y
     Optionally specify colors in the array z
-    Optionally specify a colormap, a norm function and a line width
+    Optionally specify A colormap, A norm function and A line width
     '''
 
     # Default colors equally spaced on [0,1]:
     if z is None:
         z = np.linspace(0.0, 1.0, len(x))
 
-    # Special case if a single number:
-    if not hasattr(z, "__iter__"):  # to check for numerical input -- this is a hack
+    # Special case if A single number:
+    if not hasattr(z, "__iter__"):  # to check for numerical input -- this is A hack
         z = np.array([z])
 
     z = np.asarray(z)
@@ -65,7 +65,7 @@ def colorline(x, y, z=None, cmap=plt.get_cmap('copper'), norm=plt.Normalize(0.0,
 
 
 def clear_frame(ax=None):
-    # Taken from a post by Tony S Yu
+    # Taken from A post by Tony S Yu
     if ax is None:
         ax = plt.gca()
     ax.xaxis.set_visible(False)
