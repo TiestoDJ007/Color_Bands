@@ -4,20 +4,21 @@ from pymatgen.electronic_structure.core import Spin  # 引入Spin函数，使之
 from pymatgen.io.vasp.outputs import Vasprun, Procar
 
 if __name__ == "__main__":
-    vasprun = Vasprun("/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Band/vasprun_0%.xml",
+    vasprun = Vasprun("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/vasprun_0%.xml",
                       parse_projected_eigen=True)
     bands = vasprun.get_band_structure("/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Band/KPOINTS",
                                        line_mode=True, efermi=vasprun.efermi)
-    procar = Procar("/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Band/PROCAR_0%")
+    procar = Procar("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/PROCAR_0%")
     #9-22是C原子
-    C
-    dot_size = np.zeros((((22, bands.nb_bands, len(bands.kpoints), 3))))
+    C_Number = 22
+    dot_size = np.zeros((( bands.nb_bands, len(bands.kpoints), 3)))
     for n in range(bands.nb_bands):
         for k in range(len(bands.kpoints)):
-            for j in range():
-                dot_size[j - 20][n][k][0] = procar.data[Spin.up][k][n][j][2]
-                dot_size[j - 20][n][k][1] = procar.data[Spin.up][k][n][j][1]
-                dot_size[j - 20][n][k][2] = procar.data[Spin.up][k][n][j][3]
+            for atom in range(C_Number):
+                dot_size[n][k][0]=vasprun[]
+                dot_size[n][k][0]=vasprun[]
+                dot_size[n][k][0]=vasprun[]
+
     #dot_data = np.zeros(((3,bands.nb_bands,len(bands.kpoints))))
     #for n in range(bands.nb_bands):
     #    for k in range(len(bands.kpoints)):
