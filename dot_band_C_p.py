@@ -6,20 +6,20 @@ from pymatgen.io.vasp.outputs import Vasprun, Procar
 if __name__ == "__main__":
     vasprun = Vasprun("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/vasprun_0%.xml",
                       parse_projected_eigen=True)
-    bands = vasprun.get_band_structure("/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Band/KPOINTS",
+    bands = vasprun.get_band_structure("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/KPOINTS",
                                        line_mode=True, efermi=vasprun.efermi)
     procar = Procar("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/PROCAR_0%")
     # 9-22是C原子
     Plot_Atom = 'C'
     Atom_symbol = vasprun.atomic_symbols
-    dot_size = np.zeros(((bands.nb_bands, len(bands.kpoints), 3)))
+    dot_size = np.zeros(((3, bands.nb_bands, len(bands.kpoints))))
     for n in range(bands.nb_bands):
         for k in range(len(bands.kpoints)):
             for atom_nb in range(len(Atom_symbol)):
                 if Atom_symbol[atom_nb] == Plot_Atom:
-                    dot_size[n][k][0] += procar.data[Spin.up][k][n][atom_nb][2]
-                    dot_size[n][k][1] += procar.data[Spin.up][k][n][atom_nb][1]
-                    dot_size[n][k][2] += procar.data[Spin.up][k][n][atom_nb][3]
+                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][2] * 1000
+                    dot_size[1][n][k] += procar.data[Spin.up][k][n][atom_nb][1] * 1000
+                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][3] * 1000
 
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
     font = {'family': 'sans-serif', 'size': 24}
@@ -30,14 +30,12 @@ if __name__ == "__main__":
     ax1.set_xlabel("k-points")
     ax1.set_ylabel(r"$E - E_f$   /   eV")
     ax1.grid()
-    ax1.hlines(y=0, xmin=0, xmax=len(bands.kpoints), color="k", lw=2)
-    nlabs = len(labels)
-    step = len(bands.kpoints) / (nlabs - 1)
-    for i, lab in enumerate(labels):
-        ax1.vlines(i * step, -1, 1, "k")
-    ax1.set_xticks([i * step for i in range(nlabs)])
-    ax1.set_xticklabels(labels)
-    ax1.set_xlim(0, len(bands.kpoints))
     ax1.set_title('C Orbital p Projected Bands')
-    for i in range(len(bands.kpoints)):
-        band_px = ax1.scatter(bands.kpoints[i], dot_size)
+    for n in range(bands.nb_bands):
+        band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r',
+                              marker='.')
+        band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b',
+                              marker='.')
+        band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='g',
+                              marker='.')
+    plt.show()
