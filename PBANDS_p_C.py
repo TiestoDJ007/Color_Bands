@@ -32,7 +32,7 @@ if __name__ == "__main__":
     data_file = "vasprun_-4%.xml"
     KPOINTS_file = "KPOINTS"
     root_dirctory = "/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Band/"
-    output_filename = "{}".format(os.path.basename(__file__).strip('.py') +'_'+ data_file.strip('vasprun_' + '.xml'))
+    output_filename = "{}".format(os.path.basename(__file__).strip('.py') + data_file.strip('vasprun' + '.xml'))
     output_dirctory = "/mnt/c/Users/A/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/"
     vasprun = Vasprun("{}".format(root_dirctory + data_file),
                       parse_projected_eigen=True)
