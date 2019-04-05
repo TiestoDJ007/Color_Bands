@@ -24,9 +24,9 @@ if __name__ == "__main__":
             # 挑选出投影原子的点大小数据
             for atom_nb in range(len(Atom_symbol)):
                 if Atom_symbol[atom_nb] == Plot_Atom:
-                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][2] * 300
+                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][3] * 300
                     dot_size[1][n][k] += procar.data[Spin.up][k][n][atom_nb][1] * 300
-                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][3] * 300
+                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][2] * 300
     # 选定能量区间
     energy_min = -1
     energy_max = 1
@@ -58,6 +58,7 @@ if __name__ == "__main__":
     # 展示高对称点
     ax1.set_xticks(labels_position)
     ax1.set_xticklabels(labels)
+    ax1.xaxis.set_major_locator
     # 图像标题
     ax1.set_title('C Orbital p Projected Bands')
     # 画散点图
