@@ -7,8 +7,7 @@ from matplotlib.ticker import MultipleLocator
 from pymatgen.electronic_structure.core import Orbital, Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
-vasprun = Vasprun(
-    '/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/DOS/vasprun_0%.xml')
+vasprun = Vasprun('/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/DOS/vasprun_0%.xml')
 PDOS = vasprun.pdos
 TDOS = vasprun.tdos.densities
 ENERGY_POINTS = vasprun.tdos.energies
