@@ -67,5 +67,5 @@ if __name__ == "__main__":
         band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='g', marker='.')
     # 设置平行线
     ax1.hlines(0, labels_position[0], labels_position[-1])
-    plt.savefig('/mnt/c/Users/jackx/Desktop/test_z.png', dpi=300)
+    #plt.savefig('/mnt/c/Users/jackx/Desktop/test_z.png', dpi=300)
     plt.show()
