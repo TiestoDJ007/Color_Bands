@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from pymatgen.electronic_structure.core import Spin  # 引入Spin函数，使之能被索引
+from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun, Procar
 
 if __name__ == "__main__":
@@ -17,25 +17,37 @@ if __name__ == "__main__":
         for k in range(len(bands.kpoints)):
             for atom_nb in range(len(Atom_symbol)):
                 if Atom_symbol[atom_nb] == Plot_Atom:
-                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][2] * 1000
-                    dot_size[1][n][k] += procar.data[Spin.up][k][n][atom_nb][1] * 1000
-                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][3] * 1000
+                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][2] * 300
+                    dot_size[1][n][k] += procar.data[Spin.up][k][n][atom_nb][1] * 300
+                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][3] * 300
 
+    energy_min = -1
+    energy_max = 1
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
+    labels_position = list()
     font = {'family': 'sans-serif', 'size': 24}
-    fig, ax1 = plt.subplots()
-    nlabs = len(labels)
-    step = len(bands.kpoints) / (nlabs - 1)
-    ax1.set_ylim(-1, 1)
+    fig, ax1 = plt.subplots(figsize=(8, 5))
+    ax1.tick_params(direction='in')
+    ax1.set_ylim(energy_min, energy_max)
+    ax1.set_xlim(bands.distance[0], bands.distance[-1])
     ax1.set_xlabel("k-points")
     ax1.set_ylabel(r"$E - E_f$   /   eV")
-    ax1.grid()
+    for i in range(len(bands.distance)):
+        if i == 0:
+            labels_position.append(bands.distance[i])
+        elif i < len(bands.distance) - 2:
+            if bands.distance[i] == bands.distance[i + 1]:
+                labels_position.append(bands.distance[i])
+                ax1.vlines(bands.distance[i], energy_min, energy_max, colors='gray', linestyles='dashed')
+        elif i == len(bands.distance) - 1:
+            labels_position.append(bands.distance[i])
+    ax1.set_xticks(labels_position)
+    ax1.set_xticklabels(labels)
     ax1.set_title('C Orbital p Projected Bands')
     for n in range(bands.nb_bands):
-        band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r',
-                              marker='.')
-        band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b',
-                              marker='.')
-        band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='g',
-                              marker='.')
+        band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r', marker='.')
+        band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b', marker='.')
+        band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='g', marker='.')
+    ax1.hlines(0, labels_position[0], labels_position[-1])
+    plt.savefig('/mnt/c/Users/jackx/Desktop/test_z.png', dpi=300)
     plt.show()
