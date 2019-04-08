@@ -27,23 +27,25 @@ for i in range(len(Energy_Points)):
             plot_data[1][i] += Projected_DOS[atom_nb][Orbital.px][Spin.up][i] + \
                                Projected_DOS[atom_nb][Orbital.py][Spin.up][i] + \
                                Projected_DOS[atom_nb][Orbital.pz][Spin.up][i]
-            plot_data[2][i] += Projected_DOS[atom_nb][Orbital.dxy][Spin.up][i] + Projected_DOS[atom_nb][Orbital.dyz][Spin.up][i] + \
-                               Projected_DOS[atom_nb][Orbital.dz2][Spin.up][i] + Projected_DOS[atom_nb][Orbital.dxz][Spin.up][i] + \
+            plot_data[2][i] += Projected_DOS[atom_nb][Orbital.dxy][Spin.up][i] + \
+                               Projected_DOS[atom_nb][Orbital.dyz][Spin.up][i] + \
+                               Projected_DOS[atom_nb][Orbital.dz2][Spin.up][i] + \
+                               Projected_DOS[atom_nb][Orbital.dxz][Spin.up][i] + \
                                Projected_DOS[atom_nb][Orbital.dx2][Spin.up][i]
 #    plot_data[3][i] = TDOS[Spin.up][i]
 
 
-xmajorLocator   = MultipleLocator(0.8) #将x主刻度标签设置为20的倍数
+xmajorLocator = MultipleLocator(0.8)  # 将x主刻度标签设置为20的倍数
 fig, ax1 = plt.subplots()
 font = {'family': 'sans-serif', 'size': 24}
 ax1.set_title('Density of States')
 ax1.set_xlim(EMIN, EMAX)
 ax1.set_ylim(0, max(plot_data[1]) * 1.2)
 ax1.tick_params(direction='in')
-ax1.plot(Energy_Points, plot_data[0], color='r',label="C Orbit s")
-ax1.plot(Energy_Points, plot_data[1], color='g',label="C Orbit p")
-ax1.plot(Energy_Points, plot_data[2], color='b',label="C Orbit d")
-#ax1.plot(Energy_Points, plot_data[3], color='k',label="totel")
+ax1.plot(Energy_Points, plot_data[0], color='r', label="C Orbit s")
+ax1.plot(Energy_Points, plot_data[1], color='g', label="C Orbit p")
+ax1.plot(Energy_Points, plot_data[2], color='b', label="C Orbit d")
+# ax1.plot(Energy_Points, plot_data[3], color='k',label="totel")
 ax1.xaxis.set_major_locator(xmajorLocator)
 plt.legend()
 plt.show()
