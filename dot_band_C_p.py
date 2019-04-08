@@ -7,14 +7,18 @@ from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun, Procar
 
 if __name__ == "__main__":
+    vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/'
+    vasprun_file = 'vasprun_a_-2%.xml'
+    kpoints_file = 'KPOINTS'
+    procar_file = 'PROCAR_a_-2%'
     # vasprun.xml位置
-    vasprun = Vasprun("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/vasprun_0%.xml",
+    vasprun = Vasprun("{}".format(vasprun_dirctory+vasprun_file),
                       parse_projected_eigen=True)
     # 生成独立的band数据
-    bands = vasprun.get_band_structure("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/KPOINTS",
+    bands = vasprun.get_band_structure("{}".format(vasprun_dirctory+kpoints_file),
                                        line_mode=True, efermi=vasprun.efermi)
     # 读取投影数据
-    procar = Procar("/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Band/PROCAR_0%")
+    procar = Procar("{}".format(vasprun_dirctory+procar_file))
     # 原子选择
     Plot_Atom = 'C'
     Atom_symbol = vasprun.atomic_symbols
