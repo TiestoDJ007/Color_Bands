@@ -7,10 +7,14 @@ from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun, Procar
 
 if __name__ == "__main__":
+    # 原子选择
+    Plot_Atom = 'C'
     vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/'
     vasprun_file = 'vasprun_a_-2%.xml'
     kpoints_file = 'KPOINTS'
     procar_file = 'PROCAR_a_-2%'
+    saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/'
+    saving_file = '{}'.format(Plot_Atom+'_Bands_p'+vasprun_file.strip('vasprun' + '.xml'))
     # vasprun.xml位置
     vasprun = Vasprun("{}".format(vasprun_dirctory+vasprun_file),
                       parse_projected_eigen=True)
@@ -19,8 +23,6 @@ if __name__ == "__main__":
                                        line_mode=True, efermi=vasprun.efermi)
     # 读取投影数据
     procar = Procar("{}".format(vasprun_dirctory+procar_file))
-    # 原子选择
-    Plot_Atom = 'C'
     Atom_symbol = vasprun.atomic_symbols
     dot_size = np.zeros(((3, bands.nb_bands, len(bands.kpoints))))
     for n in range(bands.nb_bands):
@@ -68,9 +70,9 @@ if __name__ == "__main__":
     # 画散点图
     for n in range(bands.nb_bands):
         band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r', marker='.')
-        band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b', marker='.')
-        band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='g', marker='.')
+        #band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b', marker='.')
+        #band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='k', marker='.')
     # 设置平行线
     ax1.hlines(0, labels_position[0], labels_position[-1])
-    #plt.savefig('/mnt/c/Users/jackx/Desktop/test_z.png', dpi=300)
+    plt.savefig('{}'.format(saving_dictory+saving_file+'.png'), dpi=300)
     plt.show()
