@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.ticker import MultipleLocator
 from pymatgen.electronic_structure.core import Orbital, Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
-vasprun = Vasprun('/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/DOS/vasprun_0%.xml')
+vasprun = Vasprun('/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/DOS/vasprun_a_-2%.xml')
 projected_dos = vasprun.pdos
-element_dos = vasprun.complete_dos.get_element_dos()
 total_dos = vasprun.tdos.get_densities(Spin.up)
 ENERGY_POINTS = vasprun.tdos.energies
 
