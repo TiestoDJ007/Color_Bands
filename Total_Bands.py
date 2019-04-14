@@ -2,6 +2,7 @@
 # -*- coding=utf-8 -*-
 
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
@@ -47,12 +48,18 @@ if __name__ == "__main__":
             labels_position.append(bands.distance[i])
     # 展示高对称点
     ax1.set_xticks(labels_position)
-    ax1.set_yticks(size=20)
     ax1.set_xticklabels(labels,size=20)
+    plt.yticks(fontsize=20)
+    yminorLocator = MultipleLocator(0.4)
+    ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
-    title = r"$Mg_2C-Gr\/Bands$"
+    title = r"$Mg_2C$-Gr Bands"
     for nb in range(bands.nb_bands):
         plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
                  color='k', linewidth=2)
-    ax1.set_title(title)
+    ax1.set_title(title,fontsize=20)
+    ax1.spines['left'].set_linewidth(2)
+    ax1.spines['right'].set_linewidth(2)
+    ax1.spines['top'].set_linewidth(2)
+    ax1.spines['bottom'].set_linewidth(2)
     plt.show()
