@@ -71,8 +71,8 @@ if __name__ == "__main__":
     ax1.set_title('C Orbital p Projected Bands')
     # 画散点图
     for n in range(bands.nb_bands):
-        band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r', marker='.')
-        #band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b', marker='.')
+        #band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r', marker='.')
+        band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b', marker='.')
         #band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='k', marker='.')
     # 设置平行线
     ax1.hlines(0, labels_position[0], labels_position[-1])
