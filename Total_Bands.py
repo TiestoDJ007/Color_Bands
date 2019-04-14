@@ -53,7 +53,8 @@ if __name__ == "__main__":
     yminorLocator = MultipleLocator(0.4)
     ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
-    title = r"$Mg_2C$-Gr Bands"
+    title = '{}'.format(
+        r"$Mg_2C$" + '-Gr_' + vasprun_file.strip('vasprun_' + '.xml') + ' Band')
     for nb in range(bands.nb_bands):
         plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
                  color='k', linewidth=2)
