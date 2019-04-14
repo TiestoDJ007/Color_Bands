@@ -64,7 +64,9 @@ if __name__ == "__main__":
     # 展示高对称点
     ax1.set_xticks(labels_position)
     ax1.set_xticklabels(labels)
-    ax1.xaxis.set_major_locator
+    # 设置刻度间隔
+    #xminorLocator = MultipleLocator(5)
+    #ax1.xaxis.set_major_locator(xminorLocator)
     # 图像标题
     ax1.set_title('C Orbital p Projected Bands')
     # 画散点图
