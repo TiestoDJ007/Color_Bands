@@ -14,15 +14,17 @@ if __name__ == "__main__":
     kpoints_file = 'KPOINTS'
     procar_file = 'PROCAR_a_-2%'
     saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/'
-    saving_file = '{}'.format(Plot_Atom+'_Bands_p'+vasprun_file.strip('vasprun' + '.xml'))
+    saving_file = '{}'.format(
+        Plot_Atom + '_Bands_p' + vasprun_file.strip('vasprun' + '.xml'))
     # vasprun.xml位置
-    vasprun = Vasprun("{}".format(vasprun_dirctory+vasprun_file),
+    vasprun = Vasprun("{}".format(vasprun_dirctory + vasprun_file),
                       parse_projected_eigen=True)
     # 生成独立的band数据
-    bands = vasprun.get_band_structure("{}".format(vasprun_dirctory+kpoints_file),
-                                       line_mode=True, efermi=vasprun.efermi)
+    bands = vasprun.get_band_structure(
+        "{}".format(vasprun_dirctory + kpoints_file),
+        line_mode=True, efermi=vasprun.efermi)
     # 读取投影数据
-    procar = Procar("{}".format(vasprun_dirctory+procar_file))
+    procar = Procar("{}".format(vasprun_dirctory + procar_file))
     Atom_symbol = vasprun.atomic_symbols
     dot_size = np.zeros(((3, bands.nb_bands, len(bands.kpoints))))
     for n in range(bands.nb_bands):
@@ -30,9 +32,12 @@ if __name__ == "__main__":
             # 挑选出投影原子的点大小数据
             for atom_nb in range(len(Atom_symbol)):
                 if Atom_symbol[atom_nb] == Plot_Atom:
-                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][3] * 300
-                    dot_size[1][n][k] += procar.data[Spin.up][k][n][atom_nb][1] * 300
-                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][2] * 300
+                    dot_size[0][n][k] += procar.data[Spin.up][k][n][atom_nb][
+                                             3] * 300
+                    dot_size[1][n][k] += procar.data[Spin.up][k][n][atom_nb][
+                                             1] * 300
+                    dot_size[2][n][k] += procar.data[Spin.up][k][n][atom_nb][
+                                             2] * 300
     # 选定能量区间
     energy_min = -1
     energy_max = 1
@@ -58,23 +63,26 @@ if __name__ == "__main__":
             if bands.distance[i] == bands.distance[i + 1]:
                 labels_position.append(bands.distance[i])
                 # 设置垂直线
-                ax1.vlines(bands.distance[i], energy_min, energy_max, colors='gray', linestyles='dashed')
+                ax1.vlines(bands.distance[i], energy_min, energy_max,
+                           colors='gray', linestyles='dashed')
         elif i == len(bands.distance) - 1:
             labels_position.append(bands.distance[i])
     # 展示高对称点
     ax1.set_xticks(labels_position)
     ax1.set_xticklabels(labels)
     # 设置刻度间隔
-    #xminorLocator = MultipleLocator(5)
-    #ax1.xaxis.set_major_locator(xminorLocator)
+    # xminorLocator = MultipleLocator(5)
+    # ax1.xaxis.set_major_locator(xminorLocator)
     # 图像标题
     ax1.set_title('C Orbital p Projected Bands')
     # 画散点图
     for n in range(bands.nb_bands):
-        #band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r', marker='.')
-        band_py = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[1][n], color='b', marker='.')
-        #band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='k', marker='.')
+        # band_px = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[0][n], color='r', marker='.')
+        band_py = ax1.scatter(bands.distance,
+                              bands.bands[Spin.up][n] - vasprun.efermi,
+                              s=dot_size[1][n], color='b', marker='.')
+        # band_pz = ax1.scatter(bands.distance, bands.bands[Spin.up][n] - vasprun.efermi, s=dot_size[2][n], color='k', marker='.')
     # 设置平行线
     ax1.hlines(0, labels_position[0], labels_position[-1])
-    plt.savefig('{}'.format(saving_dictory+saving_file+'.png'), dpi=300)
+    plt.savefig('{}'.format(saving_dictory + saving_file + '.png'), dpi=300)
     plt.show()
