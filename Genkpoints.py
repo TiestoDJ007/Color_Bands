@@ -14,5 +14,5 @@ fp2.write('\n')
 
 for i in range(nx + 1):
     for j in range(ny + 1):
-        fp2.write("  {:.6f}  {:.6f} {:.6f}  {}".format(i / nx, j / ny,0, 1))
+        fp2.write("  {:.6f}  {:.6f} {:.6f}  {}".format(i / nx, j / ny, 0, 1))
         fp2.write('\n')
