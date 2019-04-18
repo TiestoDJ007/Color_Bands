@@ -8,9 +8,8 @@ from pymatgen.io.vasp.outputs import Vasprun
 
 if __name__ == "__main__":
     vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/'
-    vasprun_file = 'vasprun_a_-2%.xml'
+    vasprun_file = 'vasprun_0%.xml'
     kpoints_file = 'KPOINTS'
-    procar_file = 'PROCAR_a_-2%'
     saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/'
     saving_file = '{}'.format(vasprun_file.strip('vasprun_' + '.xml') + '_Band')
     vasprun = Vasprun("{}".format(vasprun_dirctory + vasprun_file))
