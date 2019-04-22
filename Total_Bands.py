@@ -11,7 +11,8 @@ if __name__ == "__main__":
     vasprun_file = 'vasprun_0%.xml'
     kpoints_file = 'KPOINTS'
     saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/'
-    saving_file = '{}'.format(vasprun_file.strip('vasprun_' + '.xml') + '_Band')
+    saving_file = '{}'.format(
+        'TotBand' + vasprun_file[7:10])
     vasprun = Vasprun("{}".format(vasprun_dirctory + vasprun_file))
     bands = vasprun.get_band_structure(
         "{}".format(vasprun_dirctory + kpoints_file),
@@ -24,7 +25,7 @@ if __name__ == "__main__":
     labels_position = list()
     font = {'family': 'sans-serif', 'size': 24}
     # 开始画图
-    fig, ax1 = plt.subplots(figsize=(8, 5))
+    fig, ax1 = plt.subplots(figsize=(16, 10))
     # 设置刻度向内
     ax1.tick_params(direction='in')
     # 设置能量区间
@@ -42,7 +43,7 @@ if __name__ == "__main__":
                 labels_position.append(bands.distance[i])
                 # 设置垂直线
                 ax1.vlines(bands.distance[i], energy_min, energy_max,
-                           colors='gray', linestyles='dashed', linewidth=2)
+                           colors='gray', linestyles='dashed', linewidth=4)
         elif i == len(bands.distance) - 1:
             labels_position.append(bands.distance[i])
     # 展示高对称点
@@ -53,14 +54,17 @@ if __name__ == "__main__":
     ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
     title = '{}'.format(
-        r"$Mg_2C$" + '-Gr_' + vasprun_file.strip('vasprun_' + '.xml') + ' Band')
+        r"$Mg_2C$" + '-Gr' + vasprun_file[7:10] + ' TotBand')
     for nb in range(bands.nb_bands):
         plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
                  color='k', linewidth=2)
     ax1.set_title(title, fontsize=20)
+    ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',
+               linewidth=4)
     # 边框粗细
     ax1.spines['left'].set_linewidth(2)
     ax1.spines['right'].set_linewidth(2)
     ax1.spines['top'].set_linewidth(2)
     ax1.spines['bottom'].set_linewidth(2)
+    plt.savefig('{}'.format(saving_dictory + saving_file + '.png'), dpi=300)
     plt.show()

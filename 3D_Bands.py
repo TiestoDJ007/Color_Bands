@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 # -*- coding=utf-8 -*-
 
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import cm
+import numpy as np
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
-from mpl_toolkits.mplot3d import Axes3D
 
 if __name__ == "__main__":
-    vasprun_dirctory = '/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Fermi_Surface/'
+    vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Fermi_Surface/'
     vasprun_file = 'vasprun.xml'
     kpoints_file = 'KPOINTS'
-    saving_dictory = '/mnt/c/Users/jackx/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Fermi_Surface/'
+    saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Fermi_Surface/'
     vasprun = Vasprun("{}".format(vasprun_dirctory + vasprun_file))
     bands = vasprun.get_band_structure(
         "{}".format(vasprun_dirctory + kpoints_file), efermi=vasprun.efermi)
@@ -23,12 +21,12 @@ if __name__ == "__main__":
     #定义基矢
     rec_BVector = reciprocal.matrix[0:2,0:2]
     #定义坐标
-    rec_Parametar = np.unique(np.array(vasprun.actual_kpoints)[:,0:2],axis=0)
+    rec_Parametar = np.array(vasprun.actual_kpoints)[:,0:2]
     #实际坐标
     rec_Position = np.dot(rec_Parametar,rec_BVector)
     #选取能量，如band=53和band=55的能量
-    Energy_Band_53 = bands.bands[Spin.up][53][::2]
-    Energy_Band_54 = bands.bands[Spin.up][54][::2]
+    Energy_Band_53 = bands.bands[Spin.up][53]
+    Energy_Band_54 = bands.bands[Spin.up][54]
 
     fig = plt.figure(figsize=(16, 10))
     ax = fig.add_subplot(111, projection='3d')
@@ -36,7 +34,7 @@ if __name__ == "__main__":
     Y = rec_Position[:,1]
     Z1 = Energy_Band_53
     Z2 = Energy_Band_54
-    ax.plot_trisurf(X, Y, Z1, linewidth=0,color='r',edgecolor='none',triangles=tri)
+    ax.plot_trisurf(X, Y, Z1, linewidth=0,color='r',edgecolor='none')
     #ax.plot_trisurf(X, Y, Z2, linewidth=0.1,color='b')
     #ax.view_init(0, 0)
     plt.show()

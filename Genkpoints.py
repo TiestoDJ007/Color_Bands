@@ -1,5 +1,5 @@
-nx = 63
-ny = 63
+nx = 64
+ny = 64
 nz = 0
 
 nkpt = (nx + 1) * (ny + 1) * (nz + 1)
