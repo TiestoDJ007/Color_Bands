@@ -63,5 +63,6 @@ if __name__ == "__main__":
     fkp.write("\n")
     for i in range(len(points)):
         fkp.write(
-            "  {:.6f} {:.6f} {:.6f} {}".format(points[i][0], points[i][1], 0, 1))
+            "  {:.6f}  {:.6f}  {:.6f}  {}".format(points[i][0], points[i][1], 0, 1))
         fkp.write('\n')
+    fkp.close()
