@@ -53,3 +53,14 @@ if __name__ == "__main__":
                 yi <= LineFunction(xi, C, B).function() and \
                 yi <= LineFunction(xi, C, D).function():
             points.append(np.array((xi, yi)))
+
+    fkp = open("KPOINTS", "w")
+    fkp.write("Explicit k-points list")
+    fkp.write("\n")
+    fkp.write("{}".format(len(points)))
+    fkp.write("\n")
+    for i in range(len(points)):
+        fkp.write(
+            "  {:.6f}  {:.6f} {:.6f}  {}".format(points[i][0], points[i][1], 0,
+                                                 1))
+        fkp.write('\n')
