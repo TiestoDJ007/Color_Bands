@@ -26,15 +26,15 @@ if __name__ == "__main__":
     rec_Position = np.dot(rec_Parametar,rec_BVector)
     #选取能量，如band=53和band=55的能量
     Energy_Band_53 = bands.bands[Spin.up][53]
-    Energy_Band_54 = bands.bands[Spin.up][54]
+    Energy_Band_51 = bands.bands[Spin.up][51]
 
     fig = plt.figure(figsize=(16, 10))
-    ax = fig.add_subplot(111, projection='3d')
+    ax = fig.gca(projection='3d')
     X = rec_Position[:,0]
     Y = rec_Position[:,1]
     Z1 = Energy_Band_53
-    Z2 = Energy_Band_54
-    ax.plot_trisurf(X, Y, Z1, linewidth=0,color='r',edgecolor='none')
+    Z2 = Energy_Band_51
+    ax.plot_trisurf(X, Y, Z2, linewidth=0,cmap='winter',edgecolor='none')
     #ax.plot_trisurf(X, Y, Z2, linewidth=0.1,color='b')
-    #ax.view_init(0, 0)
+    ax.view_init(90, 0)
     plt.show()

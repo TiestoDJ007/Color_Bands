@@ -20,8 +20,8 @@ if __name__ == "__main__":
         "{}".format(vasprun_dirctory + kpoints_file),
         line_mode=True, efermi=vasprun.efermi)
 
-    energy_min = -1
-    energy_max = 1
+    energy_min = 0
+    energy_max = 0.4
     # 高对称点设置
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
     labels_position = list()
@@ -52,13 +52,13 @@ if __name__ == "__main__":
     ax1.set_xticks(labels_position)
     ax1.set_xticklabels(labels, size=20)
     plt.yticks(fontsize=20)
-    yminorLocator = MultipleLocator(0.4)
+    yminorLocator = MultipleLocator(0.05)
     ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
     title = '{}'.format(
         r"$Mg_2C$" + '-Gr' + vasprun_file[7:13] + ' TotBand')
     for nb in range(bands.nb_bands):
-        plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
+        plt.plot(bands.distance, bands.bands[Spin.up][53] - vasprun.efermi,
                  color='k', linewidth=2)
     ax1.set_title(title, fontsize=20)
     ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',
@@ -68,5 +68,5 @@ if __name__ == "__main__":
     ax1.spines['right'].set_linewidth(2)
     ax1.spines['top'].set_linewidth(2)
     ax1.spines['bottom'].set_linewidth(2)
-    plt.savefig('{}'.format(saving_dictory + saving_file + '.png'), dpi=300)
+   #plt.savefig('{}'.format(saving_dictory + saving_file + '.png'), dpi=300)
     plt.show()
