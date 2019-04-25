@@ -36,20 +36,20 @@ if __name__ == "__main__":
     C = Point(Fraction(2, 9), Fraction(2, 9))
     D = Point(Fraction(1, 9), Fraction(1, 9))
 
-    initial_points_ls=[]
-    a= np.linspace(0, 1, 1000, endpoint=False)
+    initial_points_ls = []
+    a = np.linspace(0, 1, 1000, endpoint=False)
     for i in range(len(a)):
         for j in range(len(a)):
-            initial_points_ls.append(np.array((a[i],a[j])))
-    initial_points=np.array(initial_points_ls)
-    x=initial_points[:,0]
-    y=initial_points[:,1]
+            initial_points_ls.append(np.array((a[i], a[j])))
+    initial_points = np.array(initial_points_ls)
+    x = initial_points[:, 0]
+    y = initial_points[:, 1]
     points = []
     for i in range(len(x)):
         xi = x[i]
         yi = y[i]
         if yi >= LineFunction(xi, A, B).function() and \
-           yi >= LineFunction(xi, A, D).function() and \
-           yi <= LineFunction(xi, C, B).function() and \
-           yi <= LineFunction(xi, C, D).function():
-            points.append(np.array((xi,yi)))
+                yi >= LineFunction(xi, A, D).function() and \
+                yi <= LineFunction(xi, C, B).function() and \
+                yi <= LineFunction(xi, C, D).function():
+            points.append(np.array((xi, yi)))
