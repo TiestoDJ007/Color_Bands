@@ -57,9 +57,9 @@ if __name__ == "__main__":
     fkp = open("KPOINTS", "w")
     fkp.write("Explicit k-points list")
     fkp.write("\n")
-    fkp.write("Reciprocal lattice")
-    fkp.write("\n")
     fkp.write("{}".format(len(points)))
+    fkp.write("\n")
+    fkp.write("Reciprocal lattice")
     fkp.write("\n")
     for i in range(len(points)):
         fkp.write(
