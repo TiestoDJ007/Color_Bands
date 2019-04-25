@@ -37,7 +37,7 @@ if __name__ == "__main__":
     D = Point(Fraction(1, 9), Fraction(1, 9))
 
     initial_points_ls = []
-    a = np.linspace(0, 1, 1000, endpoint=False)
+    a = np.linspace(0, 1, 500, endpoint=False)
     for i in range(len(a)):
         for j in range(len(a)):
             initial_points_ls.append(np.array((a[i], a[j])))
@@ -63,6 +63,5 @@ if __name__ == "__main__":
     fkp.write("\n")
     for i in range(len(points)):
         fkp.write(
-            "  {:.6f}  {:.6f} {:.6f}  {}".format(points[i][0], points[i][1], 0,
-                                                 1))
+            "  {:.6f} {:.6f} {:.6f} {}".format(points[i][0], points[i][1], 0, 1))
         fkp.write('\n')
