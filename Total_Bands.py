@@ -8,11 +8,13 @@ from pymatgen.io.vasp.outputs import Vasprun
 
 if __name__ == "__main__":
     vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/'
-    vasprun_file = 'vasprun_0%.xml'
+    vasprun_file = 'vasprun_a_-4%.xml'
     kpoints_file = 'KPOINTS'
     saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/'
     saving_file = '{}'.format(
-        'TotBand' + vasprun_file[7:10])
+        'TotBand' + vasprun_file[7:13])
+    title = '{}'.format(
+        r"$Mg_2C$" + '-Gr' + vasprun_file[7:13] + ' TotBand')
     vasprun = Vasprun("{}".format(vasprun_dirctory + vasprun_file))
     bands = vasprun.get_band_structure(
         "{}".format(vasprun_dirctory + kpoints_file),
@@ -54,7 +56,7 @@ if __name__ == "__main__":
     ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
     title = '{}'.format(
-        r"$Mg_2C$" + '-Gr' + vasprun_file[7:10] + ' TotBand')
+        r"$Mg_2C$" + '-Gr' + vasprun_file[7:13] + ' TotBand')
     for nb in range(bands.nb_bands):
         plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
                  color='k', linewidth=2)

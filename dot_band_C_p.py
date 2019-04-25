@@ -10,9 +10,9 @@ if __name__ == "__main__":
     # 原子选择
     Plot_Atom = 'C'
     vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Band/'
-    vasprun_file = 'vasprun_-4%.xml'
+    vasprun_file = 'vasprun_a_-4%.xml'
     kpoints_file = 'KPOINTS'
-    procar_file = 'PROCAR_-4%'
+    procar_file = 'PROCAR_a_-4%'
     saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Picture/Band/'
     saving_file = '{}'.format(
         'Atom_' + Plot_Atom + '_Bands' + vasprun_file.strip('vasprun' + '.xml'))

@@ -1,19 +1,23 @@
 # -*- coding: utf-8 -*-
+from fractions import Fraction
+
 import numpy as np
 
 
-def y(x):
+def c(Ax, Ay, Bx, By):
     y = -2 * x + 1
     return y
 
 
 if __name__ == "__main__":
-    G_x = 0.0
-    G_y = 0.0
-    M_x = 0.333
-    M_y = 0.333
-    K_x = 0.5
-    K_y = 0.0
+    Ax = 0
+    Ay = Fraction(1, 6)
+    Bx = 0
+    By = Fraction(1, 3)
+    Cx = Fraction(1, 9)
+    Cy = Fraction(1, 9)
+    Dx = Fraction(2, 9)
+    Dy = Fraction(2, 9)
     step = 0.003
 
     Point_x_0 = np.arange(G_x, M_x + step, step)
@@ -52,8 +56,9 @@ if __name__ == "__main__":
     out_file.write("%d\n" % (k_mesh.shape[0]))
     out_file.write("Reciprocal\n")
     for i in range(np.shape(k_mesh)[0]):
-        out_file.write("{0:6f}  {1:6f}  {2:6f}  {3:0f}\n".format(float(k_mesh[i, 0]),
-                                                                 float(k_mesh[i, 1]),
-                                                                 float(k_mesh[i, 2]),
-                                                                 float(k_mesh[i, 3])))
+        out_file.write(
+            "{0:6f}  {1:6f}  {2:6f}  {3:0f}\n".format(float(k_mesh[i, 0]),
+                                                      float(k_mesh[i, 1]),
+                                                      float(k_mesh[i, 2]),
+                                                      float(k_mesh[i, 3])))
     out_file.close()
