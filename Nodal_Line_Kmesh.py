@@ -54,15 +54,30 @@ if __name__ == "__main__":
                 yi <= LineFunction(xi, C, D).function():
             points.append(np.array((xi, yi)))
 
-    fkp = open("KPOINTS", "w")
-    fkp.write("Explicit k-points list")
-    fkp.write("\n")
-    fkp.write("{}".format(len(points)))
-    fkp.write("\n")
-    fkp.write("Reciprocal lattice")
-    fkp.write("\n")
-    for i in range(len(points)):
-        fkp.write(
-            "  {:.6f}  {:.6f}  {:.6f}  {}".format(points[i][0], points[i][1], 0, 1))
-        fkp.write('\n')
-    fkp.close()
+    fkp1 = open("KPOINTS_part1", "w")
+    fkp1.write("Explicit k-points list")
+    fkp1.write("\n")
+    fkp1.write("{}".format(int(len(points)/2)))
+    fkp1.write("\n")
+    fkp1.write("Reciprocal lattice")
+    fkp1.write("\n")
+    for i in range(int(len(points) / 2)):
+        fkp1.write(
+            "  {:.6f}  {:.6f}  {:.6f}  {}".format(points[i][0], points[i][1], 0,
+                                                  1))
+        fkp1.write('\n')
+    fkp1.close()
+
+    fkp2 = open("KPOINTS_part2", "w")
+    fkp2.write("Explicit k-points list")
+    fkp2.write("\n")
+    fkp2.write("{}".format(int(len(points)/2)))
+    fkp2.write("\n")
+    fkp2.write("Reciprocal lattice")
+    fkp2.write("\n")
+    for i in range(int(len(points) / 2), len(points), 1):
+        fkp2.write(
+            "  {:.6f}  {:.6f}  {:.6f}  {}".format(points[i][0], points[i][1], 0,
+                                                  1))
+        fkp2.write('\n')
+    fkp2.close()
