@@ -24,10 +24,8 @@ if __name__ == "__main__":
                                     np.array(data_part2.actual_kpoints)[:, 0:2]),
                                    axis=0)
     rec_Position = np.dot(rec_Parametar, rec_BVector)
-    Energy_Band_51 = np.concatenate((bands_part1.bands[Spin.up][51],bands_part2.bands[Spin.up][51]),axis=0)
-    Energy_Band_53 = np.concatenate(
-        (bands_part1.bands[Spin.up][53], bands_part2.bands[Spin.up][53]),
-        axis=0)
+    Energy_Band_51 = np.concatenate((bands_part1.bands[Spin.up][51], bands_part2.bands[Spin.up][51]),axis=0)
+    Energy_Band_53 = np.concatenate((bands_part1.bands[Spin.up][53], bands_part2.bands[Spin.up][53]),axis=0)
 
     fig = plt.figure(figsize=(16, 10))
     ax = fig.gca(projection='3d')
