@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp import Vasprun
+from mpl_toolkits.mplot3d import Axes3D
 
 if __name__ == "__main__":
     root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Nodal_Line/"
@@ -34,7 +35,7 @@ if __name__ == "__main__":
     Z51 = Energy_Band_51
     Z53 = Energy_Band_53
     ax.plot_trisurf(X, Y, Z51, linewidth=0,cmap='hot',edgecolor='none')
-    ax.plot_trisurf(X, Y, Z53, linewidth=0, cmap='hot', edgecolor='none')
+    #ax.plot_trisurf(X, Y, Z53, linewidth=0, cmap='hot', edgecolor='none')
     #ax.plot_trisurf(X, Y, Z2, linewidth=0.1,color='b')
     ax.view_init(60, 20)
     plt.show()
