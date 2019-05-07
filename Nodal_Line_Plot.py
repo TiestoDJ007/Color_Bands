@@ -3,9 +3,24 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy import cos,sin
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp import Vasprun
 from mpl_toolkits.mplot3d import Axes3D
+
+def rotation(cart,theta):
+    rotation_matrix = np.array([[cos(theta),-sin(theta),0],
+                                [sin(theta),cos(theta),0],
+                                [0,0,1]])
+    cart_re = np.dot(rotation_matrix,cart)
+    return cart_re
+
+def refliction(cart,theta):
+    refliction_matrix = np.array([[cos(2*theta),sin(2*theta),0],
+                                  [sin(2*theta),-cos(2*theta),0],
+                                  [0,0,1]])
+    re_cart = np.dot(refliction_matrix,cart)
+    return re_cart
 
 if __name__ == "__main__":
     root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Nodal_Line/"
@@ -24,18 +39,52 @@ if __name__ == "__main__":
     rec_Parametar = np.concatenate((np.array(data_part1.actual_kpoints)[:, 0:2],
                                     np.array(data_part2.actual_kpoints)[:, 0:2]),
                                    axis=0)
-    rec_Position = np.dot(rec_Parametar, rec_BVector)
+    rec_Position_0 = np.dot(rec_Parametar, rec_BVector)
+    #rec_Position_ro=[]
+    #for cart in rec_Position:
+    #    rec_Position_ro.append(refliction(cart,np.pi/6))
+    #rec_Position_ro = np.array(rec_Position_ro)
     Energy_Band_51 = np.concatenate((bands_part1.bands[Spin.up][51], bands_part2.bands[Spin.up][51]),axis=0)
-    Energy_Band_53 = np.concatenate((bands_part1.bands[Spin.up][53], bands_part2.bands[Spin.up][53]),axis=0)
+    #Energy_Band_53 = np.concatenate((bands_part1.bands[Spin.up][53], bands_part2.bands[Spin.up][53]),axis=0)
+    data_0 = np.column_stack((rec_Parametar,Energy_Band_51))
+    data_ref_tmp = []
+    for cart in data_0:
+        data_ref_tmp.append(refliction(cart,0))
+    data_ref = np.array(data_ref_tmp)
+    data = np.concatenate((data_0,data_ref),axis=0)
 
-    fig = plt.figure(figsize=(16, 10))
+    data_rot_tmp = []
+    for cart_rot in data:
+        data_rot_tmp.append(rotation(cart_rot, 1* np.pi / 3))
+    data_rot_1 = np.array(data_rot_tmp)
+    data_rot_tmp = []
+    for cart_rot in data:
+        data_rot_tmp.append(rotation(cart_rot, 2* np.pi / 3))
+    data_rot_2 = np.array(data_rot_tmp)
+    data_rot_tmp = []
+    for cart_rot in data:
+        data_rot_tmp.append(rotation(cart_rot, 3* np.pi / 3))
+    data_rot_3= np.array(data_rot_tmp)
+    data_rot_tmp = []
+    for cart_rot in data:
+        data_rot_tmp.append(rotation(cart_rot, 4* np.pi / 3))
+    data_rot_4 = np.array(data_rot_tmp)
+    data_rot_tmp = []
+    for cart_rot in data:
+        data_rot_tmp.append(rotation(cart_rot, 5* np.pi / 3))
+    data_rot_5 = np.array(data_rot_tmp)
+
+    data_tot = np.concatenate((data,data_rot_1,data_rot_2,data_rot_3,data_rot_4,data_rot_5),axis=0)
+
+    fig = plt.figure(figsize=(16, 16))
     ax = fig.gca(projection='3d')
-    X = rec_Position[:,0]
-    Y = rec_Position[:,1]
-    Z51 = Energy_Band_51
-    Z53 = Energy_Band_53
-    ax.plot_trisurf(X, Y, Z51, linewidth=0,cmap='hot',edgecolor='none')
+    X = data_tot[:,0]
+    Y = data_tot[:,1]
+    Z51 = data_tot[:,2]
+    #Z53 = Energy_Band_53
+    ax.plot_trisurf(X, Y, Z51, linewidth=0,cmap='rainbow',edgecolor='none')
     #ax.plot_trisurf(X, Y, Z53, linewidth=0, cmap='hot', edgecolor='none')
     #ax.plot_trisurf(X, Y, Z2, linewidth=0.1,color='b')
-    ax.view_init(60, 20)
+
+    ax.view_init(90,0)
     plt.show()
