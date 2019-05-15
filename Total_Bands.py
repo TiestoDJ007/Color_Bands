@@ -58,7 +58,7 @@ if __name__ == "__main__":
     title = '{}'.format(
         r"$Mg_2C$" + '-Gr' + vasprun_file[7:13] + ' TotBand')
     for nb in range(51,54,1):
-        plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
+        plt.plot(bands.distance, bands.bands[Spin.up][51] - vasprun.efermi,
                  color='k', linewidth=2)
     ax1.set_title(title, fontsize=20)
     ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',
@@ -68,5 +68,5 @@ if __name__ == "__main__":
     ax1.spines['right'].set_linewidth(2)
     ax1.spines['top'].set_linewidth(2)
     ax1.spines['bottom'].set_linewidth(2)
-   #plt.savefig('{}'.format(saving_dictory + saving_file + '.png'), dpi=300)
+    plt.savefig('/mnt/d/nodal_line_plot.png')
     plt.show()

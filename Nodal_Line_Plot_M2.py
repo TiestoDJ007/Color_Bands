@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python
 
-import matplotlib.pyplot as plt
 import numpy as np
+import plotly
+import plotly.plotly  as py
+import plotly.graph_objs as go
 from numpy import cos,sin
 from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp import Vasprun
-from mpl_toolkits.mplot3d import Axes3D
+
 
 def rotation(cart,theta):
     rotation_matrix = np.array([[cos(theta),-sin(theta),0],
@@ -23,6 +25,7 @@ def refliction(cart,theta):
     return re_cart
 
 if __name__ == "__main__":
+    #plotly.tools.set_credentials_file(username='TiestoDJ007', api_key='2mw1gohx77')
     root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Nodal_Line/"
     data_part1 = Vasprun("{}".format(root + "NL1/vasprun_part1.xml"))
     data_part2 = Vasprun("{}".format(root + "NL1/vasprun_part2.xml"))
@@ -45,9 +48,11 @@ if __name__ == "__main__":
     #    rec_Position_ro.append(refliction(cart,np.pi/6))
     #rec_Position_ro = np.array(rec_Position_ro)
     Energy_Band_51 = np.concatenate((bands_part1.bands[Spin.up][51], bands_part2.bands[Spin.up][51]),axis=0)
-    #Energy_Band_53 = np.concatenate((bands_part1.bands[Spin.up][53], bands_part2.bands[Spin.up][53]),axis=0)
+    Energy_Band_53 = np.concatenate((bands_part1.bands[Spin.up][53], bands_part2.bands[Spin.up][53]),axis=0)
+    Energy_Band_tot = np.concatenate((Energy_Band_51,Energy_Band_53),axis=0)
     data_0 = np.column_stack((rec_Parametar,Energy_Band_51))
-    data_ref_tmp = []
+    data_1 = np.column_stack((rec_Parametar, Energy_Band_53))
+    data_ref_tmp=[]
     for cart in data_0:
         data_ref_tmp.append(refliction(cart,0))
     data_ref = np.array(data_ref_tmp)
@@ -75,18 +80,48 @@ if __name__ == "__main__":
     data_rot_5 = np.array(data_rot_tmp)
 
     data_tot_tmp = np.concatenate((data,data_rot_1,data_rot_2,data_rot_3,data_rot_4,data_rot_5),axis=0)
+    data_half_tot = np.concatenate((data_rot_5, data_rot_4), axis=0)
     data_tot = np.round(np.unique(data_tot_tmp,axis=0),decimals=4)
 
-    fig = plt.figure(figsize=(16, 16))
-    ax = fig.gca(projection='3d')
-    X = data_tot[:,0]
-    Y = data_tot[:,1]
-    Z51 = data_tot[:,2]
-    #Z53 = Energy_Band_53
-    ax.plot_trisurf(X, Y, Z51, linewidth=0,cmap='rainbow',edgecolor='none')
-    #ax.plot_trisurf(X, Y, Z53, linewidth=0, cmap='hot', edgecolor='none')
-    #ax.plot_trisurf(X, Y, Z2, linewidth=0.1,color='b')
+    plot_data = [
+        go.Scatter3d(
+            x=data_half_tot[:,0],
+            y=data_half_tot[:,1],
+            z=data_half_tot[:,2],
+            mode='markers',
+            marker={"size":1,"showscale": True, "color": data_half_tot[:,2]}
 
-    ax.view_init(90,0)
-    plt.savefig('/mnt/d/nodal_line_plot.png')
-    plt.show()
+    )
+    ]
+
+    layout = go.Layout(
+        width=800,
+        height=700,
+        autosize=False,
+        title='Volcano dataset',
+        scene=dict(
+            xaxis=dict(
+                gridcolor='rgb(255, 255, 255)',
+                zerolinecolor='rgb(255, 255, 255)',
+                showbackground=True,
+                backgroundcolor='rgb(230, 230,230)'
+            ),
+            yaxis=dict(
+                gridcolor='rgb(255, 255, 255)',
+                zerolinecolor='rgb(255, 255, 255)',
+                showbackground=True,
+                backgroundcolor='rgb(230, 230,230)'
+            ),
+            zaxis=dict(
+                gridcolor='rgb(255, 255, 255)',
+                zerolinecolor='rgb(255, 255, 255)',
+                showbackground=True,
+                backgroundcolor='rgb(230, 230,230)'
+            ),
+            aspectratio=dict(x=1, y=1, z=0.7),
+            aspectmode='manual'
+        )
+    )
+
+    fig = dict(data=plot_data, layout=layout)
+    plotly.offline.plot(fig,filename='test.html')

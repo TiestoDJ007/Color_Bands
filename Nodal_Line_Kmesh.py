@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 # !/usr/bin/env python
 
-from fractions import Fraction
-
 import numpy as np
+from matplotlib.path import Path
 
 
 class Point:
@@ -31,10 +30,10 @@ class LineFunction:
 
 
 if __name__ == "__main__":
-    A = Point(Fraction(1, 6), 0)
-    B = Point(Fraction(1, 3), 0)
-    C = Point(Fraction(2, 9), Fraction(2, 9))
-    D = Point(Fraction(1, 9), Fraction(1, 9))
+    A = np.array([1/6,0])
+    B = np.array([1/3,0])
+    C = np.array([1/9,1/9])
+    D = np.array([2/9,2/9])
 
     initial_points_ls = []
     a = np.linspace(0, 1, 500, endpoint=False)
@@ -42,42 +41,39 @@ if __name__ == "__main__":
         for j in range(len(a)):
             initial_points_ls.append(np.array((a[i], a[j])))
     initial_points = np.array(initial_points_ls)
-    x = initial_points[:, 0]
-    y = initial_points[:, 1]
-    points = []
-    for i in range(len(x)):
-        xi = x[i]
-        yi = y[i]
-        if yi >= LineFunction(xi, A, B).function() and \
-                yi >= LineFunction(xi, A, D).function() and \
-                yi <= LineFunction(xi, C, B).function() and \
-                yi <= LineFunction(xi, C, D).function():
-            points.append(np.array((xi, yi)))
 
-    fkp1 = open("KPOINTS_part1", "w")
+    point_path = [A,B,D,C,A]
+    area = Path(point_path)
+    kpoints = []
+    for point in initial_points:
+        if area.contains_point(point) == True:
+            kpoints.append(point)
+    kpoints = np.array(kpoints)
+
+    fkp1 = open("KPOINTS_part1_2", "w")
     fkp1.write("Explicit k-points list")
     fkp1.write("\n")
-    fkp1.write("{}".format(int(len(points)/2)))
+    fkp1.write("{}".format(int(len(kpoints) / 2)))
     fkp1.write("\n")
     fkp1.write("Reciprocal lattice")
     fkp1.write("\n")
-    for i in range(int(len(points) / 2)):
+    for i in range(int(len(kpoints) / 2)):
         fkp1.write(
-            "  {:.6f}  {:.6f}  {:.6f}  {}".format(points[i][0], points[i][1], 0,
+            "  {:.6f}  {:.6f}  {:.6f}  {}".format(kpoints[i][0], kpoints[i][1], 0,
                                                   1))
         fkp1.write('\n')
     fkp1.close()
 
-    fkp2 = open("KPOINTS_part2", "w")
+    fkp2 = open("KPOINTS_part2_2", "w")
     fkp2.write("Explicit k-points list")
     fkp2.write("\n")
-    fkp2.write("{}".format(int(len(points)/2)))
+    fkp2.write("{}".format(int(len(kpoints) / 2)))
     fkp2.write("\n")
     fkp2.write("Reciprocal lattice")
     fkp2.write("\n")
-    for i in range(int(len(points) / 2), len(points), 1):
+    for i in range(int(len(kpoints) / 2), len(kpoints), 1):
         fkp2.write(
-            "  {:.6f}  {:.6f}  {:.6f}  {}".format(points[i][0], points[i][1], 0,
+            "  {:.6f}  {:.6f}  {:.6f}  {}".format(kpoints[i][0], kpoints[i][1], 0,
                                                   1))
         fkp2.write('\n')
     fkp2.close()
