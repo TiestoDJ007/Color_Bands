@@ -85,11 +85,11 @@ if __name__ == "__main__":
 
     plot_data = [
         go.Scatter3d(
-            x=data_half_tot[:,0],
-            y=data_half_tot[:,1],
-            z=data_half_tot[:,2],
+            x=data_rot_4[:,0],
+            y=data_rot_4[:,1],
+            z=data_rot_4[:,2],
             mode='markers',
-            marker={"size":1,"showscale": True, "color": data_half_tot[:,2]}
+            marker={"size":1,"showscale": True, "color": data_rot_4[:,2]}
 
     )
     ]
@@ -104,13 +104,17 @@ if __name__ == "__main__":
                 gridcolor='rgb(255, 255, 255)',
                 zerolinecolor='rgb(255, 255, 255)',
                 showbackground=True,
-                backgroundcolor='rgb(230, 230,230)'
+                backgroundcolor='rgb(230, 230,230)',
+                autorange=False,
+                range=[-0.5,0.5]
             ),
             yaxis=dict(
                 gridcolor='rgb(255, 255, 255)',
                 zerolinecolor='rgb(255, 255, 255)',
                 showbackground=True,
-                backgroundcolor='rgb(230, 230,230)'
+                backgroundcolor='rgb(230, 230,230)',
+                autorange=False,
+                range=[-0.5, 0.5]
             ),
             zaxis=dict(
                 gridcolor='rgb(255, 255, 255)',
