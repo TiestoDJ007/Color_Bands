@@ -38,8 +38,8 @@ if __name__ == "__main__":
         rec_coordinate.extend(vasp_data[num_rec].actual_kpoints)
     rec_coordinate = np.array(rec_coordinate)[:, 0:2]
 
-    shearing_matrix = np.array([[1, 1/2],
-                                [0, sqrt(3)/2]])
+    shearing_matrix = np.array([[1, 1 / 2],
+                                [0, sqrt(3) / 2]])
     rec_Position_shearing = []
     for rec_cart in rec_coordinate:
         rec_Position_shearing.append(np.matmul(shearing_matrix, rec_cart))
@@ -56,16 +56,16 @@ if __name__ == "__main__":
         energy_data = energy_band.bands[Spin.up][53]
         Energy_Band_53.extend(energy_data.tolist())
     Energy_Band_53 = np.array(Energy_Band_53)
-    #Energy_Band_tot = np.concatenate((Energy_Band_51, Energy_Band_53), axis=0)
+    # Energy_Band_tot = np.concatenate((Energy_Band_51, Energy_Band_53), axis=0)
 
     data_51 = np.column_stack((rec_Position, Energy_Band_51))
     data_53 = np.column_stack((rec_Position, Energy_Band_53))
 
-    data_tot =[]
+    data_tot = []
     for rot_num in range(6):
         rot_data = []
         for rot_cart in data_51:
-            rot_data.append(rotation(rot_cart,rot_num * np.pi /3))
+            rot_data.append(rotation(rot_cart, rot_num * np.pi / 3))
         data_tot.extend(rot_data)
     data_tot = np.array(data_tot)
 
