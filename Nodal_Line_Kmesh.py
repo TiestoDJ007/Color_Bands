@@ -30,10 +30,12 @@ class LineFunction:
 
 
 if __name__ == "__main__":
-    A = np.array([1/6,0])
-    B = np.array([1/3,0])
-    C = np.array([1/9,1/9])
-    D = np.array([2/9,2/9])
+    A = np.array([1 / 6, 0])
+    B = np.array([1 / 3, 0])
+    C = np.array([2 / 9, 2 / 9])
+    D = np.array([0, 1 / 3])
+    E = np.array([0, 1 / 6])
+    F = np.array([1 / 9, 1 / 9])
 
     initial_points_ls = []
     a = np.linspace(0, 1, 500, endpoint=False)
@@ -42,7 +44,7 @@ if __name__ == "__main__":
             initial_points_ls.append(np.array((a[i], a[j])))
     initial_points = np.array(initial_points_ls)
 
-    point_path = [A,B,D,C,A]
+    point_path = [A, B, C, D, E, F, A]
     area = Path(point_path)
     kpoints = []
     for point in initial_points:
@@ -50,30 +52,21 @@ if __name__ == "__main__":
             kpoints.append(point)
     kpoints = np.array(kpoints)
 
-    fkp1 = open("KPOINTS_part1_2", "w")
-    fkp1.write("Explicit k-points list")
-    fkp1.write("\n")
-    fkp1.write("{}".format(int(len(kpoints) / 2)))
-    fkp1.write("\n")
-    fkp1.write("Reciprocal lattice")
-    fkp1.write("\n")
-    for i in range(int(len(kpoints) / 2)):
-        fkp1.write(
-            "  {:.6f}  {:.6f}  {:.6f}  {}".format(kpoints[i][0], kpoints[i][1], 0,
-                                                  1))
-        fkp1.write('\n')
-    fkp1.close()
+    kpoints_split = np.array_split(kpoints, 4, axis=0)
 
-    fkp2 = open("KPOINTS_part2_2", "w")
-    fkp2.write("Explicit k-points list")
-    fkp2.write("\n")
-    fkp2.write("{}".format(int(len(kpoints) / 2)))
-    fkp2.write("\n")
-    fkp2.write("Reciprocal lattice")
-    fkp2.write("\n")
-    for i in range(int(len(kpoints) / 2), len(kpoints), 1):
-        fkp2.write(
-            "  {:.6f}  {:.6f}  {:.6f}  {}".format(kpoints[i][0], kpoints[i][1], 0,
-                                                  1))
-        fkp2.write('\n')
-    fkp2.close()
+    for num_split in range(len(kpoints_split)):
+        open_file = 'KPOINTS_split_part_{}'.format(num_split)
+        fkp1 = open(open_file, "w")
+        fkp1.write("Explicit k-points list")
+        fkp1.write("\n")
+        fkp1.write("{}".format(len(kpoints_split[num_split])))
+        fkp1.write("\n")
+        fkp1.write("Reciprocal lattice")
+        fkp1.write("\n")
+        for i in range(len(kpoints_split[num_split])):
+            fkp1.write(
+                "  {:.6f}  {:.6f}  {:.6f}  {}".format(kpoints_split[num_split][i][0],
+                                                      kpoints_split[num_split][i][1],
+                                                      0, 1))
+            fkp1.write('\n')
+        fkp1.close()
