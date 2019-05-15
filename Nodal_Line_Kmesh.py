@@ -4,31 +4,6 @@
 import numpy as np
 from matplotlib.path import Path
 
-
-class Point:
-    def __init__(self, x=0, y=0):
-        self.x = x
-        self.y = y
-
-    def getx(self):
-        return self.x
-
-    def gety(self):
-        return self.y
-
-
-class LineFunction:
-    def __init__(self, x, p1, p2):
-        self.k = Fraction(p2.gety() - p1.gety(), p2.getx() - p1.getx())
-        self.b = p1.gety() - p1.getx() * Fraction(p2.gety() - p1.gety(),
-                                                  p2.getx() - p1.getx())
-        self.x = x
-
-    def function(self):
-        y = self.k * self.x + self.b
-        return float(y)
-
-
 if __name__ == "__main__":
     A = np.array([1 / 6, 0])
     B = np.array([1 / 3, 0])
