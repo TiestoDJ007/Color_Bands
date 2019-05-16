@@ -10,6 +10,7 @@ from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp import Vasprun
 
 
+# 旋转函数
 def rotation(cart, theta):
     rotation_matrix = np.array([[cos(theta), -sin(theta), 0],
                                 [sin(theta), cos(theta), 0],
@@ -18,9 +19,11 @@ def rotation(cart, theta):
 
 
 if __name__ == "__main__":
+    # 在生成kmesh脚本中，kpoints所分成的个数
     split_number = 4
     root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Nodal_Line/NL1/"
 
+    # 将vasprun.xml转换成能够使用的数据
     vasp_data = []
     band_data = []
     for num_data in range(split_number):
@@ -32,11 +35,13 @@ if __name__ == "__main__":
             efermi=vasp_data[num_data].efermi,
             line_mode=False))
 
+    # 选取到空间坐标
     rec_coordinate = []
     for num_rec in range(len(vasp_data)):
         rec_coordinate.extend(vasp_data[num_rec].actual_kpoints)
     rec_coordinate = np.array(rec_coordinate)[:, 0:2]
 
+    # 形变矩阵，将等腰直角三角形变成等边三角形
     shearing_matrix = np.array([[1, 1 / 2],
                                 [0, sqrt(3) / 2]])
     rec_Position_shearing = []
@@ -44,6 +49,7 @@ if __name__ == "__main__":
         rec_Position_shearing.append(np.matmul(shearing_matrix, rec_cart))
     rec_Position = np.array(rec_Position_shearing)
 
+    # 能量数据采集，能带51和53
     Energy_Band_51 = []
     for energy_band in band_data:
         energy_data = energy_band.bands[Spin.up][51]
@@ -57,6 +63,7 @@ if __name__ == "__main__":
     Energy_Band_53 = np.array(Energy_Band_53)
     # Energy_Band_tot = np.concatenate((Energy_Band_51, Energy_Band_53), axis=0)
 
+    # 能量数据和位置数据合并
     data_51 = np.column_stack((rec_Position, Energy_Band_51))
     data_53 = np.column_stack((rec_Position, Energy_Band_53))
 
@@ -68,6 +75,7 @@ if __name__ == "__main__":
         data_tot.extend(rot_data)
     data_tot = np.array(data_tot)
 
+    # 使用plotly画图
     data_plot = data_tot
     plot_data = [
         go.Scatter3d(

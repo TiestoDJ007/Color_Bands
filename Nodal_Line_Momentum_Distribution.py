@@ -79,6 +79,7 @@ if __name__ == "__main__":
     data_51_split = np.array_split(data_51, 150, axis=0)
     data_53_split = np.array_split(data_53, 150, axis=0)
 
+    # 旋转一个无限小的角度，旋转出的扇形近似为一条直线，选取这条直线上最大或者最小的数值，即是能带最大或最小的值
     plot_data_polar_51 = []
     for num_split in range(len(data_51_split)):
         max_point = np.argmax(data_51_split[num_split][:, 2])
@@ -116,4 +117,5 @@ if __name__ == "__main__":
     plt.ylim((-1, 1))
     plt.plot(x_51, y_51, color='b')
     plt.plot(x_53, y_53, color='r')
+
     plt.show()
