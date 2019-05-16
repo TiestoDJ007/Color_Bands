@@ -18,7 +18,6 @@ def rotation(cart, theta):
 
 
 if __name__ == "__main__":
-    # plotly.tools.set_credentials_file(username='TiestoDJ007', api_key='2mw1gohx77')
     split_number = 4
     root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Nodal_Line/NL1/"
 
