@@ -86,7 +86,7 @@ if __name__ == "__main__":
     plot_data_polar_51 = np.array(plot_data_polar_51)
     plot_data_polar_53 = []
     for num_split in range(len(data_53_split)):
-        max_point = np.argmax(data_53_split[num_split][:, 2])
+        max_point = np.argmin(data_53_split[num_split][:, 2])
         plot_data_polar_53.append(data_53_split[num_split][max_point][0:2])
     plot_data_polar_53 = np.array(plot_data_polar_53)
 

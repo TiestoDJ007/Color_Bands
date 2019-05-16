@@ -63,7 +63,7 @@ if __name__ == "__main__":
     data_tot = []
     for rot_num in range(6):
         rot_data = []
-        for rot_cart in data_51:
+        for rot_cart in data_53:
             rot_data.append(rotation(rot_cart, rot_num * np.pi / 3))
         data_tot.extend(rot_data)
     data_tot = np.array(data_tot)
@@ -114,4 +114,4 @@ if __name__ == "__main__":
     )
 
     fig = dict(data=plot_data, layout=layout)
-    plotly.offline.plot(fig, filename='Nodal_Line_51.html')
+    plotly.offline.plot(fig, filename='Nodal_Line_53.html')
