@@ -76,6 +76,7 @@ if __name__ == "__main__":
     data_51 = data_51_sort[np.argsort(data_51_sort[:, 1])]
     data_53 = data_53_sort[np.argsort(data_53_sort[:, 1])]
 
+    #设置扇形大小，分辨率
     data_51_split = np.array_split(data_51, 150, axis=0)
     data_53_split = np.array_split(data_53, 150, axis=0)
 
@@ -108,14 +109,29 @@ if __name__ == "__main__":
         plot_data_cart_53.extend(rot_data)
     plot_data_cart_53 = np.array(plot_data_cart_53)
 
-    plt.figure()
+    plt.figure(figsize=(8, 6))
     x_51 = plot_data_cart_51[:, 0]
     y_51 = plot_data_cart_51[:, 1]
     x_53 = plot_data_cart_53[:, 0]
     y_53 = plot_data_cart_53[:, 1]
-    plt.xlim((-1, 1))
-    plt.ylim((-1, 1))
-    plt.plot(x_51, y_51, color='b')
-    plt.plot(x_53, y_53, color='r')
+    x_brillouin = [1 / 2, 0, -1 / 2, -1 / 2, 0, 1 / 2, 1 / 2]
+    y_brillouin = [sqrt(3) / 6, sqrt(3) / 3, sqrt(3) / 6, -sqrt(3) / 6, -sqrt(3) / 3, -sqrt(3) / 6, sqrt(3) / 6]
+    plt.axis("equal")
+    plt.xlim((-0.6, 0.6))
+    plt.ylim((-0.6, 0.6))
+    plt.xlabel('{}'.format('$k_x$'+'('+'$\AA^{-1}$'+')'),size=16)
+    plt.ylabel('{}'.format('$k_y$' + '(' + '$\AA^{-1}$' + ')'), size=16)
+    plt.xticks(fontsize=16)
+    plt.yticks(fontsize=16)
+    plt.text(-0.75,0.5,'NL',size=25)
+    plt.text( -0.04, -0.06, r'$\Gamma$', size=16)
+    plt.text(0.52, -0.06, 'M', size=16)
+    plt.text(0.52, sqrt(3) / 6, 'K', size=16)
+    plt.plot([0,0.5],[0,0],color='g')
+    plt.plot([0,0.5],[0,sqrt(3)/6],color='g')
+    plt.plot(x_51, y_51, color='b',label='NL1')
+    plt.plot(x_53, y_53, color='r',label='NL2')
+    plt.legend(loc=0,fontsize=16,edgecolor='w' )
+    plt.plot(x_brillouin, y_brillouin, color='k')
 
     plt.show()
