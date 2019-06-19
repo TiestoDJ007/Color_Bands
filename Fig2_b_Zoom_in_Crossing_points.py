@@ -14,14 +14,14 @@ if __name__ == "__main__":
     saving_file = '{}'.format(
         'TotBand')
     title = '{}'.format(
-        r"$Mg_2C$" + '-Gr' + ' TotBand')
+        r"$Mg_2C$" + '-Gr' + ' Point_a_Band')
     vasprun = Vasprun("{}".format(vasprun_dirctory + vasprun_file))
     bands = vasprun.get_band_structure(
         "{}".format(vasprun_dirctory + kpoints_file),
         line_mode=True, efermi=vasprun.efermi)
 
-    energy_min = -1
-    energy_max = 1
+    energy_min = 0.05
+    energy_max = 0.1
     # 高对称点设置
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
     labels_position = list()
@@ -33,7 +33,7 @@ if __name__ == "__main__":
     # 设置能量区间
     ax1.set_ylim(energy_min, energy_max)
     # 设置x轴区间
-    ax1.set_xlim(bands.distance[0], bands.distance[-1])
+    ax1.set_xlim(bands.distance[0], bands.distance[2])
     ax1.set_xlabel("k-points", size=30)
     ax1.set_ylabel(r"$E - E_f$   /   eV", size=25)
     # 寻找高对称点
@@ -49,10 +49,11 @@ if __name__ == "__main__":
         elif i == len(bands.distance) - 1:
             labels_position.append(bands.distance[i])
     # 展示高对称点
-    ax1.set_xticks(labels_position)
+    ax1.set_xticks(labels_position[0:2])
     ax1.set_xticklabels(labels, size=20)
     plt.yticks(fontsize=20)
-    yminorLocator = MultipleLocator(0.4)
+    plt.grid(linewidth=3)
+    yminorLocator = MultipleLocator(0.002)
     ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
     title = '{}'.format(

@@ -20,8 +20,8 @@ if __name__ == "__main__":
         "{}".format(vasprun_dirctory + kpoints_file),
         line_mode=True, efermi=vasprun.efermi)
 
-    energy_min = -1
-    energy_max = 1
+    energy_min = 0
+    energy_max = 0.12
     # 高对称点设置
     labels = [r"$M$", r"$\Gamma$", r"$K$", r"$M$"]
     labels_position = list()
@@ -33,7 +33,6 @@ if __name__ == "__main__":
     # 设置能量区间
     ax1.set_ylim(energy_min, energy_max)
     # 设置x轴区间
-    ax1.set_xlim(bands.distance[0], bands.distance[-1])
     ax1.set_xlabel("k-points", size=30)
     ax1.set_ylabel(r"$E - E_f$   /   eV", size=25)
     # 寻找高对称点
@@ -49,10 +48,11 @@ if __name__ == "__main__":
         elif i == len(bands.distance) - 1:
             labels_position.append(bands.distance[i])
     # 展示高对称点
-    ax1.set_xticks(labels_position)
-    ax1.set_xticklabels(labels, size=20)
+    ax1.set_xlim(labels_position[1],labels_position[2])
+    ax1.set_xticks([labels_position[1],labels_position[2]])
+    ax1.set_xticklabels(labels[1:3], size=20)
     plt.yticks(fontsize=20)
-    yminorLocator = MultipleLocator(0.4)
+    yminorLocator = MultipleLocator(0.005)
     ax1.yaxis.set_major_locator(yminorLocator)
     # 图像标题
     title = '{}'.format(
@@ -61,12 +61,13 @@ if __name__ == "__main__":
         plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
                  color='k', linewidth=2)
     ax1.set_title(title, fontsize=20)
-    ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',
-               linewidth=4)
+#    ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',
+#               linewidth=4)
     # 边框粗细
     ax1.spines['left'].set_linewidth(2)
     ax1.spines['right'].set_linewidth(2)
     ax1.spines['top'].set_linewidth(2)
     ax1.spines['bottom'].set_linewidth(2)
+    plt.grid(linewidth=3)
     plt.savefig('{}'.format(saving_dictory+saving_file+".png"))
     plt.show()
