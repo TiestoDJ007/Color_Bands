@@ -58,7 +58,7 @@ if __name__ == "__main__":
     title = '{}'.format(
         r"$Mg_2C$" + '-Gr' + vasprun_file[7:13] + ' TotBand')
     for nb in range(len(bands.bands[Spin.up])):
-        plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
+        plt.plot(bands.distance, bands.bands[Spin.up][52] - vasprun.efermi,
                  color='k', linewidth=2)
     ax1.set_title(title, fontsize=20)
     ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',

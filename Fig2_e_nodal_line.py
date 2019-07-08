@@ -77,8 +77,8 @@ if __name__ == "__main__":
     data_53 = data_53_sort[np.argsort(data_53_sort[:, 1])]
 
     #设置扇形大小，分辨率
-    data_51_split = np.array_split(data_51, 150, axis=0)
-    data_53_split = np.array_split(data_53, 150, axis=0)
+    data_51_split = np.array_split(data_51, 80, axis=0)
+    data_53_split = np.array_split(data_53, 80, axis=0)
 
     # 旋转一个无限小的角度，旋转出的扇形近似为一条直线，选取这条直线上最大或者最小的数值，即是能带最大或最小的值
     plot_data_polar_51 = []

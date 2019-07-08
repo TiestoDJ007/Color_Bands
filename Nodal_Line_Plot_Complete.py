@@ -3,6 +3,7 @@
 
 import numpy as np
 import plotly
+import plotly.io as pio
 import plotly.plotly  as py
 import plotly.graph_objs as go
 from numpy import cos, sin, sqrt
@@ -20,8 +21,8 @@ def rotation(cart, theta):
 
 if __name__ == "__main__":
     # 在生成kmesh脚本中，kpoints所分成的个数
-    split_number = 4
-    root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Nodal_Line/NL1/"
+    split_number = 24
+    root = "/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Paper_results/Nodal_Line/"
 
     # 将vasprun.xml转换成能够使用的数据
     vasp_data = []
@@ -70,7 +71,7 @@ if __name__ == "__main__":
     data_tot = []
     for rot_num in range(6):
         rot_data = []
-        for rot_cart in data_53:
+        for rot_cart in data_51:
             rot_data.append(rotation(rot_cart, rot_num * np.pi / 3))
         data_tot.extend(rot_data)
     data_tot = np.array(data_tot)
@@ -78,12 +79,12 @@ if __name__ == "__main__":
     # 使用plotly画图
     data_plot = data_tot
     plot_data = [
-        go.Scatter3d(
+        go.Contour(
             x=data_plot[:, 0],
             y=data_plot[:, 1],
             z=data_plot[:, 2],
-            mode='markers',
-            marker={"size": 1, "showscale": True, "color": data_plot[:, 2]}
+            #mode='markers',
+            #marker={"size": 1, "showscale": True, "color": data_plot[:, 2]}
 
         )
     ]
@@ -122,4 +123,5 @@ if __name__ == "__main__":
     )
 
     fig = dict(data=plot_data, layout=layout)
-    plotly.offline.plot(fig, filename='Nodal_Line_53.html')
+    #pio.write_image(fig, 'images/fig1.jpeg')
+    plotly.offline.plot(fig, filename='/mnt/d/Nodal_Line_PLANAR_51.html')

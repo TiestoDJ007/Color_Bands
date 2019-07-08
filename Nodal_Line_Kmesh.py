@@ -5,12 +5,12 @@ import numpy as np
 from matplotlib.path import Path
 
 if __name__ == "__main__":
-    A = np.array([1 / 6, 0])
-    B = np.array([1 / 3, 0])
-    C = np.array([2 / 9, 2 / 9])
-    D = np.array([0, 1 / 3])
-    E = np.array([0, 1 / 6])
-    F = np.array([1 / 9, 1 / 9])
+    A = np.array([0, 0])
+    B = np.array([1 / 2, 0])
+    C = np.array([1 / 3, 1 / 3])
+    D = np.array([0, 1 / 2])
+    # E = np.array([0, 1 / 6])
+    # F = np.array([1 / 9, 1 / 9])
 
     initial_points_ls = []
     a = np.linspace(0, 1, 500, endpoint=False)
@@ -19,7 +19,7 @@ if __name__ == "__main__":
             initial_points_ls.append(np.array((a[i], a[j])))
     initial_points = np.array(initial_points_ls)
 
-    point_path = [A, B, C, D, E, F, A]
+    point_path = [A, B, C, D, A]
     area = Path(point_path)
     kpoints = []
     for point in initial_points:
@@ -27,7 +27,7 @@ if __name__ == "__main__":
             kpoints.append(point)
     kpoints = np.array(kpoints)
 
-    kpoints_split = np.array_split(kpoints, 4, axis=0)
+    kpoints_split = np.array_split(kpoints, 24, axis=0)
 
     for num_split in range(len(kpoints_split)):
         open_file = 'KPOINTS_split_part_{}'.format(num_split)

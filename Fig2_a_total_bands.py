@@ -7,7 +7,7 @@ from pymatgen.electronic_structure.core import Spin
 from pymatgen.io.vasp.outputs import Vasprun
 
 if __name__ == "__main__":
-    vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Paper_results/Bands/data/'
+    vasprun_dirctory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Paper_results/Bands_Pure/data/'
     vasprun_file = 'vasprun.xml'
     kpoints_file = 'KPOINTS'
     saving_dictory = '/mnt/c/Users/a/OneDrive/Calculation_Data/Mg2C_Graphene/Paper_results/Picture/'
@@ -58,7 +58,7 @@ if __name__ == "__main__":
     title = '{}'.format(
         r"$Mg_2C$" + '-Gr' + vasprun_file[7:13] + ' TotBand')
     for nb in range(len(bands.bands[Spin.up])):
-        plt.plot(bands.distance, bands.bands[Spin.up][nb] - vasprun.efermi,
+        plt.plot(bands.distance, bands.bands[Spin.up][51] - vasprun.efermi,
                  color='k', linewidth=2)
     ax1.set_title(title, fontsize=20)
     ax1.hlines(0, labels_position[0], labels_position[-1], colors='r',
